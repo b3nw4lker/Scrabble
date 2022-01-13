@@ -1,3 +1,4 @@
+import pygame
 # TO DO
 # 1) create 15 by 15 
 # 2) when i click on something it gives me location [x] [y]
