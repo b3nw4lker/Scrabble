@@ -1,5 +1,5 @@
 import pygame 
-from .constants import WHITE, ORANGE, SQUARE_SIZE
+from .constants import COLS, ROWS, WHITE, ORANGE, SQUARE_SIZE
 
 
 class Board:
@@ -9,5 +9,9 @@ class Board:
     
     def draw_squares(self, win):
         win.fill(WHITE)
-        pygame.draw.rect(win, ORANGE, (row *SQUARE_SIZE, col *SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+        for x in range(ROWS):
+            for y in range(COLS):
+                rect = pygame.Rect(x*SQUARE_SIZE, y*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
+                pygame.draw.rect(win, ORANGE, rect, 1)
+        
         
