@@ -4,3 +4,5 @@
 # 3) print so it looks like a scrabble board.
 # 4) DW TW DL etc...
 
+# Example Link - https://github.com/cheukyin699/py-scrabble
+
