@@ -23,9 +23,19 @@ def main():
                 run = False
                 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pass
+                mouse_position = pygame.mouse.get_pos()
+                print(mouse_position)
+               
+
+                
 
         board.draw_squares(WIN)
+        board.draw_deck(WIN)
+        board.draw_player1_score(WIN)
+        board.draw_player2_score(WIN)
+        board.draw_tile_boosters(WIN)
+        board.draw_swap_button(WIN)
+        
         pygame.display.update()
 
     pygame.quit()
