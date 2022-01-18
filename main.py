@@ -5,7 +5,7 @@ from scrabbleproj.board import Board
 #Scrabble Project for NEA
 
 # Example Link - https://github.com/cheukyin699/py-scrabble
-FPS = 60
+FPS = 244
 
 WIN = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption('Scrabble')
