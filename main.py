@@ -1,6 +1,6 @@
 import pygame
 from scrabbleproj.constants import WIDTH, HEIGHT
-from scrabbleproj.board import Board
+from scrabbleproj.board import Board, Deck
 #Ben Walker 
 #Scrabble Project for NEA
 
@@ -15,6 +15,7 @@ def main():
     run = True
     clock = pygame.time.Clock()
     board = Board()
+    deck = Deck()
     while run:
         clock.tick(FPS)
     
@@ -30,7 +31,7 @@ def main():
                 
 
         board.draw_squares(WIN)
-        board.draw_deck(WIN)
+        deck.draw_deck(WIN)
         board.draw_player1_score(WIN)
         board.draw_player2_score(WIN)
         board.draw_tile_boosters(WIN)

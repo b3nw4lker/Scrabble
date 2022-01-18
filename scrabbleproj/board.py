@@ -1,11 +1,11 @@
 import pygame 
 from .constants import BLACK, COLS, ROWS, WHITE, ORANGE, SQUARE_SIZE, DECK_Y_AXIS, TRIPLEWORDIMG, TRIPLELETTERIMG, DOUBLEWORDIMG, DOUBLELETTERIMG, STARTTILE
-
+from scrabbleproj.deck import Deck
 
 class Board:
     def __init__(self):
         self.board = []
-        self.deck = []
+        self.deck = Deck()
         self.selected_tile = None
         
     #drawing the grid for scrabble
@@ -16,11 +16,6 @@ class Board:
                 rect = pygame.Rect(x*SQUARE_SIZE, y*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
                 pygame.draw.rect(win, ORANGE, rect, 1)
     
-    #drawing the deck 
-    def draw_deck(self, win):
-        for x in range(7): 
-            deckboxes = pygame.Rect(x*SQUARE_SIZE, DECK_Y_AXIS, 53, 53)
-            pygame.draw.rect(win, ORANGE, deckboxes, 1)
     
     #drawing player1 and 2 score
     def draw_player1_score(self, win):
