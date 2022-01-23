@@ -15,6 +15,9 @@ ORANGE = (255, 165, 0, 255)
 LIGHT_ORANGE = (255, 165, 0, 255)
 LIGHT_BLUE = (173, 216, 230, 255)
 
+#Buttons 
+
+
 #Tile Booster Images
 DOUBLELETTERIMG = pygame.transform.scale(pygame.image.load('assets/doubleletter.png'), (54,54))
 DOUBLEWORDIMG = pygame.transform.scale(pygame.image.load('assets/doubleword.png'), (54,54))

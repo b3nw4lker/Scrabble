@@ -2,6 +2,7 @@ import pygame
 from scrabbleproj.constants import WIDTH, HEIGHT
 from scrabbleproj.board import Board
 from scrabbleproj.deck import Deck, Tilebag
+
 #Ben Walker 
 #Scrabble Project for NEA
 
@@ -11,6 +12,7 @@ FPS = 60
 WIN = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption('Scrabble')
 
+# swap_button = Button(400, 870)
 
 def main():
     run = True
@@ -35,7 +37,7 @@ def main():
                 print(mouse_position)
                
 
-                
+        # swap_button.draw(WIN)     
         board.draw_squares(WIN)
         board.draw_player1_score(WIN)
         board.draw_player2_score(WIN)

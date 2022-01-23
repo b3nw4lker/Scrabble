@@ -37,12 +37,21 @@ class Board:
     
     #Swap Tile Button 
     def draw_swap_button(self,win):
+        button_pressed = False
         pygame.font.init()
         font = pygame.font.Font('freesansbold.ttf',12)
         score = font.render("Swap tile", True, BLACK)
-        win.blit(score,(505, 875))
+        win.blit(score,(510, 880))
         swapbuttonbox = pygame.Rect(500, 870, 100, 40)
         pygame.draw.rect(win, ORANGE, swapbuttonbox, 1)
+        pos = pygame.mouse.get_pos()
+        if swapbuttonbox.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] == 1 and button_pressed == False: #Making it so that only one click is registered as a positive output
+                button_pressed = True
+                print('Clicked')
+                button_pressed = False
+    
+    
     
     #triple word placement
     def draw_tile_boosters(self, win):
@@ -115,12 +124,40 @@ class Board:
         
         win.blit(STARTTILE,(378,378))
 
-    # def calc_pos(self):   still idea
-    #     x_coord = self.pos_on_board[0]
-    #     y_coord = self.pos_on_board[1]
-    #     print(x_coord)
-    #     print(y_coord)
-    #     # center_x_pos = x_coord
-    #     # self.x = SQUARE_SIZE * self.col + SQUARE_SIZE//2    #this is making sure that the position (coords)
-    #     # self.y = SQUARE_SIZE * self.row + SQUARE_SIZE//2    #that i get will be from the centre of the square    
+    
+#button class 
+# class Button():
+#     def __init__(self, x ,y, image):
+#         self.image = image
+#         self.rect = self.image.get_rect()
+#         self.rect.topleft = (x, y)
+#         self.clicked = False
+    
+#     def draw(self,win):
+        
+#         pos = pygame.mouse.get_pos()
+#         if self.rect.collidepoint(pos):
+#             if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False: #Making it so that only one click is registered as a positive output
+#                 self.clicked = True
+#                 print('Clicked')
+                
+#         if pygame.mouse.get_pressed()[0] == 0: #Making it so that you can click again after and that the button isnt just locked 
+#             self.clicked = False
+            
+#         #draw button on screen
+#         win.blit(self.image, (self.rect.x, self.rect.y))
+        
+# swap_button = Button(400, 870)
+
+
+
+        
+# def calc_pos(self):   still idea
+#     x_coord = self.pos_on_board[0]
+#     y_coord = self.pos_on_board[1]
+#     print(x_coord)
+#     print(y_coord)
+#     # center_x_pos = x_coord
+#     # self.x = SQUARE_SIZE * self.col + SQUARE_SIZE//2    #this is making sure that the position (coords)
+#     # self.y = SQUARE_SIZE * self.row + SQUARE_SIZE//2    #that i get will be from the centre of the square    
         
