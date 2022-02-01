@@ -1,6 +1,5 @@
-from .constants import ORANGE, LIGHT_ORANGE, BLUE, LIGHT_BLUE, RED, SQUARE_SIZE, DOUBLELETTERIMG, DOUBLEWORDIMG, TRIPLELETTERIMG, TRIPLEWORDIMG, STARTTILE
 
-class Tileboost:
+class TileBoost:
     def __init__(self, row, col, colour):
         self.row = row
         self.col = col
