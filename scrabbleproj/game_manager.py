@@ -56,8 +56,7 @@ class GameManager:
         
         
         
-        # print('h')
-        # if GameManager.start == TRUE:
+
         #     pos = pygame.mouse.get_pos()
         #     print(pos)
         #     tile_pos = (pos[0]/54,pos[1]/54)

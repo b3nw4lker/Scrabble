@@ -35,13 +35,10 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False    
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                game_manager.start = TRUE          
+                run = False            
             else:
-                pass
-                # print(event)
-                # game_manager.handle(event)
+                #print(event)
+                game_manager.handle(event)
 
             # Drawing the state
             # screen.fill((0, 0, 0))

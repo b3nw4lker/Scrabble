@@ -21,7 +21,7 @@ class Board:
         # [4, 8, 12, 16, 20]
         self.win = window
         self.selected_tile = None
-
+        self.tile_bag = TileBag()
         self._draw_squares()
         self._draw_tile_boosters()
         self._draw_swap_button()
@@ -67,10 +67,10 @@ class Board:
                 self.win.blit(tile_name, tile)
     
     def _draw_tile_bag_count(self):
-        ammount = (TileBag.get_tile_bag_count)
+        ammount = self.tile_bag.get_tile_bag_count()
         font = pygame.font.Font('freesansbold.ttf', 12)
         tile_bag_counter = font.render("Tiles Remaining :" + str(ammount), True, BLACK)
-        self.win.blit(tile_bag_counter, (800, 880))
-        tilebagbox = pygame.Rect(800, 870, 100, 40)
+        self.win.blit(tile_bag_counter, (810, 880))
+        tilebagbox = pygame.Rect(800, 870, 150, 40)
         pygame.draw.rect(self.win, ORANGE, tilebagbox, 1)
         
