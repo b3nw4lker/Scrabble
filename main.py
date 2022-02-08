@@ -1,3 +1,4 @@
+from pickle import TRUE
 import pygame
 from scrabbleproj.constants import WIDTH, HEIGHT
 from scrabbleproj.game_manager import GameManager
@@ -34,10 +35,13 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                run = False    
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                game_manager.start = TRUE          
             else:
-                print(event)
-                game_manager.handle(event)
+                pass
+                # print(event)
+                # game_manager.handle(event)
 
             # Drawing the state
             # screen.fill((0, 0, 0))

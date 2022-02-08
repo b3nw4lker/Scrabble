@@ -6,6 +6,7 @@ class Player:
         self.player_name = player_name
         self.tile_bag = tile_bag
         self.window = window
+        self.score = 0
         self.player_deck = Deck(self.tile_bag, window)
 
         self.create_player_deck()

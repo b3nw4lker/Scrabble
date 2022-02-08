@@ -27,8 +27,8 @@ POINTS = {"A": 1, "C": 3, "B": 3, "E": 1, "D": 2, "G": 2,
           "R": 1, "U": 1, "T": 1, "W": 4, "V": 4, "Y": 4,
           "X": 8, "Z": 10, "BLANK": 0}
 
-# Letter distribution
-DISTRIBUTION = {"BLANK": 2, "E": 12, "A": 9, "I": 9, "O": 8, "N": 6, "R": 6, "T": 6,
+# Letter distribution should make 100there is 100 here so i think it may be running the distribution more than once as only 
+DISTRIBUTION = {"BLANK": 2, "E": 12, "A": 9, "I": 9, "O": 8, "N": 6, "R": 6, "T": 6,     
                 "L": 4, "S": 4, "U": 4, "D": 4, "G": 3, "B": 2, "C": 2, "M": 2,
                 "P": 2, "F": 2, "H": 2, "V": 2, "W": 2, "Y": 2, "K": 1, "J": 1,
                 "X": 1, "Q": 1, "Z": 1}
@@ -74,3 +74,5 @@ BONUS_TILE_LOCATIONS = {
                       (540, 216), (540, 540), (594, 162), (594, 594), (648, 108), (648, 648), (702, 54), (702, 702)],
     STARTTILE: [(378, 378)]
 }
+
+# BOARD_LIST = []           

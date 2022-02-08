@@ -1,13 +1,16 @@
+import imp
 import pygame
+from scrabbleproj.tile_bag import TileBag
 
 from .constants import BLACK, COLS, ROWS, WHITE, ORANGE, SQUARE_SIZE, BONUS_TILE_LOCATIONS
 
 
 class Board:
     def __init__(self, window):
-        self.board = [object(), object(), object()] # Maybe this needs to be empty strings or other and replaced with objects
+        self.board = [[object() for col in range(COLS)] for row in range(ROWS)]
+        self.board[0][0] = -1
         print(self.board)
-        self.board = []
+        #self.board = [object(), object(), object()] # Maybe this needs to be empty strings or other and replaced with objects
         # .append(object())
         # https://www.geeksforgeeks.org/multi-dimensional-lists-in-python/
         # a = [[], [], []]
@@ -22,6 +25,7 @@ class Board:
         self._draw_squares()
         self._draw_tile_boosters()
         self._draw_swap_button()
+        self._draw_tile_bag_count()
 
     # draself.wing the grid for scrabble
     def _draw_squares(self):
@@ -61,3 +65,12 @@ class Board:
         for tile_name, tile_locations in BONUS_TILE_LOCATIONS.items():
             for tile in tile_locations:
                 self.win.blit(tile_name, tile)
+    
+    def _draw_tile_bag_count(self):
+        ammount = (TileBag.get_tile_bag_count)
+        font = pygame.font.Font('freesansbold.ttf', 12)
+        tile_bag_counter = font.render("Tiles Remaining :" + str(ammount), True, BLACK)
+        self.win.blit(tile_bag_counter, (800, 880))
+        tilebagbox = pygame.Rect(800, 870, 100, 40)
+        pygame.draw.rect(self.win, ORANGE, tilebagbox, 1)
+        

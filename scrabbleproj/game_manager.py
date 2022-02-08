@@ -1,5 +1,8 @@
+from pickle import FALSE, TRUE
+import pygame
 from scrabbleproj.board import Board
 from scrabbleproj.player import Player
+from scrabbleproj.tile import Tile
 from scrabbleproj.tile_bag import TileBag
 from scrabbleproj.words import Words
 
@@ -8,11 +11,10 @@ class GameManager:
 
     def __init__(self, window):
         self.window = window
-
+        #self.position = position
         self.board = Board(self.window)
         self.tile_bag = TileBag()
         self.words = Words()
-
         print(f"Initial tile bag qty: {self.tile_bag.get_tile_bag_count()}")
 
         self.player_one = Player("Ashley", self.tile_bag, self.window)
@@ -36,22 +38,43 @@ class GameManager:
         :param event: Game loop event
         :return:
         """
+        if event == pygame.MOUSEBUTTONDOWN: # need to add in and mouse pos is in the board collision zone
+            GameManager.handle_board_placement()
+    
 
     #     if mouse button clicked:
     #             what action is the player taking:
     #                 call that function - e.g. handle_board_removal, handle_tile_swap
 
-    def handle_board_removal(self, position):
-        pass
+    def handle_board_removal(self, x, y):
+        Board.board[x][y] = object()
 
-    def handle_board_placement(self, position):
-        pass
+    def handle_board_placement(self, x, y):
+        Board.board[x][y] = Tile.letter
+        #self.win.blit(tile_name, tile)
+        
+        
+        
+        
+        # print('h')
+        # if GameManager.start == TRUE:
+        #     pos = pygame.mouse.get_pos()
+        #     print(pos)
+        #     tile_pos = (pos[0]/54,pos[1]/54)
+        #     print(tile_pos)
+        # else:
+        #     pass
+        
 
     def handle_hand_replacement(self, position):
         pass
 
     def handle_hand_select(self, position):
-        pass
+        if pygame.MOUSEBUTTONDOWN:
+            print(Player.player_deck[position])
+    
+
+        
 
     def draw(self):
         pass
