@@ -11,6 +11,12 @@ class Deck:
         self.deck_tiles = []
         self.tile_bag = tile_bag
         self._draw_deck()
+        self.position = (0, 870)
+        self._deck_size = (7 * 54, 7 * 54)
+        self._rect = pygame.Rect(self.position, self._deck_size)
+
+    def clicked_in_deck(self, cursor_location):
+        return self._rect.collidepoint(cursor_location)
 
     def create_random_tile_deck(self):
         tile_locations_x = [0, 54, 107, 162, 216, 270, 324]
@@ -44,4 +50,14 @@ class Deck:
     def swap_tile(self, tile):
         # Public we call this from the player
         pass
+
+    def get_tile_clicked(self, position):
+        position[0] -= self.position[0]
+
+        selected_tile = position[0] // SQUARE_SIZE
+
+        if selected_tile < len(self.deck_tiles):
+            return selected_tile
+        else:
+            return -1
 

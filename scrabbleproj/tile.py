@@ -7,3 +7,7 @@ class Tile:
         self.points = POINTS.get(letter)
         self.image = IMAGE.get(letter)
         self.clicked = False
+        self.player_assigned = None
+        self.tile_location = (0, 0)
+        self.is_fixed = False
+

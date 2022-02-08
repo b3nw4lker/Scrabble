@@ -1,4 +1,3 @@
-from importlib_metadata import distribution
 from scrabbleproj.constants import DISTRIBUTION, POINTS
 from scrabbleproj.tile import Tile
 

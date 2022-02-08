@@ -8,17 +8,10 @@ from .constants import BLACK, COLS, ROWS, WHITE, ORANGE, SQUARE_SIZE, BONUS_TILE
 class Board:
     def __init__(self, window):
         self.board = [[object() for col in range(COLS)] for row in range(ROWS)]
-        self.board[0][0] = -1
-        print(self.board)
-        #self.board = [object(), object(), object()] # Maybe this needs to be empty strings or other and replaced with objects
-        # .append(object())
-        # https://www.geeksforgeeks.org/multi-dimensional-lists-in-python/
-        # a = [[], [], []]
-        # for record in a:
-        #     print(record)
-        # [{cell: (location), tile: Tile()}, {cell: (location), tile: object()}, {cell: (location), tile: object()}, {cell: (location), tile: object()}, {cell: (location), tile: object()}]
-        # [3, 6, 9, 12, 15]
-        # [4, 8, 12, 16, 20]
+        self.position = (0, 0) # Check this what is this??
+
+        self._board_size = (15 * SQUARE_SIZE, 15 * SQUARE_SIZE)
+        self._rect = pygame.Rect(self.position, self._board_size)
         self.win = window
         self.selected_tile = None
         self.tile_bag = TileBag()
@@ -26,6 +19,9 @@ class Board:
         self._draw_tile_boosters()
         self._draw_swap_button()
         self._draw_tile_bag_count()
+
+    def clicked_in_board(self, cursor_location):
+        return self._rect.collidepoint(cursor_location)
 
     # draself.wing the grid for scrabble
     def _draw_squares(self):
@@ -73,4 +69,12 @@ class Board:
         self.win.blit(tile_bag_counter, (810, 880))
         tilebagbox = pygame.Rect(800, 870, 150, 40)
         pygame.draw.rect(self.win, ORANGE, tilebagbox, 1)
+
+    def get_tile_pos(self, position):
+        position[0] -= self.position[0]
+        position[1] -= self.position[1]
+
+        # Calculate integer division
+        return (position[0] // SQUARE_SIZE,
+                position[1] // SQUARE_SIZE)
         

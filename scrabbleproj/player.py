@@ -1,3 +1,4 @@
+from scrabbleproj.constants import SQUARE_SIZE
 from scrabbleproj.deck import Deck
 
 
@@ -11,5 +12,8 @@ class Player:
 
         self.create_player_deck()
 
+        print(self.player_deck.deck_tiles)
+
     def create_player_deck(self):
         self.player_deck.create_random_tile_deck()
+

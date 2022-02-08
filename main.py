@@ -35,9 +35,9 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False            
+                run = False
             else:
-                #print(event)
+                # print("Event being called")
                 game_manager.handle(event)
 
             # Drawing the state
