@@ -47,7 +47,7 @@ def main():
 
             # Updating the state
             game_manager.update(clock.tick(60) / 1e3)
-
+    
     pygame.quit()
 
 main()

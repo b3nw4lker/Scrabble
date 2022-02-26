@@ -9,8 +9,9 @@ class Player:
         self.window = window
         self.score = 0
         self.player_deck = Deck(self.tile_bag, window)
-
+        
         self.create_player_deck()
+               
 
         print(self.player_deck.deck_tiles)
 

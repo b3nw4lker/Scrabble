@@ -1,7 +1,7 @@
+from operator import truediv
 import random
 
 import pygame
-
 from scrabbleproj.constants import SQUARE_SIZE, DECK_Y_AXIS, ORANGE
 
 
@@ -42,14 +42,11 @@ class Deck:
     def _draw_tile(self, tile):
         self.win.blit(tile[0].image, (tile[1], DECK_Y_AXIS))
 
-    # WARNING DO NOT USE THIS METHOD IT WILL CREATE A RANDOM DISASSOCIATED TILE!!!!
-    # def override_tile(self):
-    #     self.deck_tiles[0] = (Tile("Z"), 0)
-    #     self.draw_tile(self.deck_tiles[0])
-
-    def swap_tile(self, tile):
+  
+    
+            
         # Public we call this from the player
-        pass
+        
 
     def get_tile_clicked(self, position):
         position[0] -= self.position[0]
