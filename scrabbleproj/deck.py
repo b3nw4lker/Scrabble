@@ -41,12 +41,7 @@ class Deck:
 
     def _draw_tile(self, tile):
         self.win.blit(tile[0].image, (tile[1], DECK_Y_AXIS))
-
-  
-    
-            
         # Public we call this from the player
-        
 
     def get_tile_clicked(self, position):
         position[0] -= self.position[0]
@@ -57,4 +52,15 @@ class Deck:
             return selected_tile
         else:
             return -1
+
+    def get_location_in_deck(self, tile_object):
+        for index, tile in enumerate(self.deck_tiles):
+            if tile[0] == tile_object:
+                return index
+
+        return None
+
+    def update_tile_in_deck(self, tile_object):
+        self._draw_tile(tile_object)
+
 
