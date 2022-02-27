@@ -32,10 +32,10 @@ class Board:
                 rect = pygame.Rect(x * SQUARE_SIZE, y * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
                 pygame.draw.rect(self.win, ORANGE, rect, 1)
 
-    def draw_player_score(self, player_name, location):
+    def draw_player_score(self, player, location):
         pygame.font.init()
         font = pygame.font.Font('freesansbold.ttf', 12)
-        score = font.render(f"{player_name}'s Score :{player_name.score}", True, BLACK)
+        score = font.render(f"{player.player_name}'s Score :{player.score}", True, BLACK)
         self.win.blit(score, (871, location[0]))
         player2scorebox = pygame.Rect(870, location[1], 100, 40)
         pygame.draw.rect(self.win, ORANGE, player2scorebox, 1)
@@ -79,8 +79,4 @@ class Board:
         #         word.append(letter_in_word)
         #         print(len(word))
         #         print('it worked!!!!!!!')
-    
-    
-                
-
         

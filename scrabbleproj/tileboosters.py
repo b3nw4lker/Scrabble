@@ -1,9 +1,9 @@
 
 class TileBoost:
-    def __init__(self, row, col, colour):
-        self.row = row
-        self.col = col
-        self.colour = colour
+    def __init__(self):
+        # self.row = row
+        # self.col = col
+        # self.colour = colour
         self.double_letter = True
         self.double_word = False
         self.triple_letter = False
@@ -12,8 +12,7 @@ class TileBoost:
         
         self.x = 0
         self.y = 0
-        
-        
+
     def make_double_letter(self):
         self.double_letter = True
     
