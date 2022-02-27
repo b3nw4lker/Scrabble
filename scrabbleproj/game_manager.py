@@ -25,23 +25,16 @@ class GameManager:
         self.player_two = Player("Player Two", self.tile_bag, self.window)
 
         self.turn_end = False
-        if self.turn_end is False:
-            self.current_player = self.player_one
-        else:
-            self.current_player = self.player_two
-            return
-
-        playerturn = Button((WHITE), 50, 815, 100, 40, (f'Its {self.current_player.player_name}s turn !'))
+        self.current_player = self.player_one
+        self.update_player_turn()
 
         self.swapbutton = swapbutton
         self.end_turn_button = endturn
-        self.players_go_button = playerturn
 
         self.board.draw_player_score(self.player_one.player_name, (101, 100))
         self.board.draw_player_score(self.player_two.player_name, (401, 400))
         self.swapbutton.draw_button(self.window)
         self.end_turn_button.draw_button(self.window)
-        self.players_go_button.draw_button(self.window)
 
         print(f"Tile bag qty after player one creation: {self.tile_bag.get_tile_bag_count()}")
 
@@ -65,6 +58,7 @@ class GameManager:
             if self.board.clicked_in_board(cursor_location):
                 cell_clicked = self.board.get_tile_pos(cursor_location)
                 board_data_object_location = self.board.board[cell_clicked[0]][cell_clicked[1]]
+                print(board_data_object_location)
                 self.board.board[cell_clicked[0]][cell_clicked[1]] = "Clicked"
             # Determine which tile user has clicked onto
             if self.current_player.player_deck.clicked_in_deck(cursor_location):
@@ -105,10 +99,20 @@ class GameManager:
             print("click a tile to swap then press")
 
     def handle_end_turn(self):
-        if self.turn_end == False:
-            self.turn_end == True
+        if self.current_player == self.player_two:
+            self.current_player = self.player_one
         else:
-            self.turn_end == False
+            self.current_player = self.player_two
+
+        self.update_player_turn()
+
+        print(f"It is player: {self.current_player.player_name} turn")
+
+    def update_player_turn(self):
+        player_turn = Button((WHITE), 50, 815, 100, 40, (f'Its {self.current_player.player_name}s turn !'))
+        players_go_button = player_turn
+        players_go_button.draw_button(self.window)
+        self.current_player.player_deck.draw_deck()
 
     def draw(self):
         pass

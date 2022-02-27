@@ -10,7 +10,6 @@ class Deck:
         self.win = window
         self.deck_tiles = []
         self.tile_bag = tile_bag
-        self._draw_deck()
         self.position = (0, 870)
         self._deck_size = (7 * 54, 7 * 54)
         self._rect = pygame.Rect(self.position, self._deck_size)
@@ -28,10 +27,8 @@ class Deck:
             self.deck_tiles.append((random_tile_selected, location))
             self.tile_bag.tile_bag_items.remove(random_tile_selected)
 
-        self._draw_deck()
-
     # drawing the deck 7 boxes long
-    def _draw_deck(self):
+    def draw_deck(self):
         for x in range(7):
             deck_boxes = pygame.Rect(x * SQUARE_SIZE, DECK_Y_AXIS, 53, 53)
             pygame.draw.rect(self.win, ORANGE, deck_boxes, 1)
