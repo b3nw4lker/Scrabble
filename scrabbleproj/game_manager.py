@@ -5,7 +5,7 @@ import pygame
 
 from scrabbleproj.board import Board
 from scrabbleproj.buttons import Button, swapbutton, endturn
-from scrabbleproj.constants import WHITE
+from scrabbleproj.constants import WHITE, DECK_Y_AXIS
 from scrabbleproj.player import Player
 from scrabbleproj.tile import Tile
 from scrabbleproj.tile_bag import TileBag
@@ -41,6 +41,7 @@ class GameManager:
         self.selected_tile = None
         self.selected_tile_location = None
         self.tile_area_clicked = None
+        self.tiles_to_replenish_at_turn_end = []
 
         # self.event_actions = {
         #     'board_click': self.board.locations,
@@ -56,10 +57,9 @@ class GameManager:
         cursor_location = list(pygame.mouse.get_pos())
         if event.type == pygame.MOUSEBUTTONUP:
             if self.board.clicked_in_board(cursor_location):
-                cell_clicked = self.board.get_tile_pos(cursor_location)
-                board_data_object_location = self.board.board[cell_clicked[0]][cell_clicked[1]]
-                print(board_data_object_location)
-                self.board.board[cell_clicked[0]][cell_clicked[1]] = "Clicked"
+                print("Cursor location")
+                print(cursor_location)
+                self.handle_board_placement(cursor_location)
             # Determine which tile user has clicked onto
             if self.current_player.player_deck.clicked_in_deck(cursor_location):
                 self.handle_hand_select(cursor_location)
@@ -72,8 +72,23 @@ class GameManager:
     def handle_board_removal(self, x, y):
         Board.board[x][y] = object()
 
-    def handle_board_placement(self, x, y):
-        Board.board[x][y] = Tile.letter
+    def handle_board_placement(self, cursor_location):
+        cell_clicked = self.board.get_tile_pos(cursor_location)
+        board_data_object_location = self.board.board[cell_clicked[0]][cell_clicked[1]]
+
+        if self.selected_tile and not self.selected_tile.disabled:
+            self.board.board[cell_clicked[0]][cell_clicked[1]] = self.selected_tile
+            place_holder_tile = Tile(None)
+            place_holder_tile.disabled = True
+            blank_tile_placeholder = (place_holder_tile, self.selected_tile_location)
+            self.current_player.player_deck.deck_tiles[self.current_player.player_deck.get_tile_clicked(cursor_location)] = blank_tile_placeholder
+            self.current_player.player_deck.update_tile_in_deck(blank_tile_placeholder)
+            self.board.update_tile(self.selected_tile, board_data_object_location.tile_location)
+            self.tiles_to_replenish_at_turn_end.append(self.selected_tile)
+            self.selected_tile = None
+        #     We need to add new tiles at end of turn and re-draw deck
+        else:
+            print("Tile not selected from deck")
 
     def handle_hand_replacement(self, position):
         pass
@@ -81,6 +96,11 @@ class GameManager:
     def handle_hand_select(self, position):
         self.tile_area_clicked = self.current_player.player_deck.get_tile_clicked(position)
         self.selected_tile = self.current_player.player_deck.deck_tiles[self.tile_area_clicked][0]
+
+        if self.selected_tile.disabled:
+            print("This is a placeholder tile")
+            return
+
         self.selected_tile_location = self.current_player.player_deck.deck_tiles[self.tile_area_clicked][1]
         self.selected_tile.clicked = True
         self.selected_tile.player_assigned = self.current_player
@@ -99,11 +119,16 @@ class GameManager:
             print("click a tile to swap then press")
 
     def handle_end_turn(self):
+        print(f"Tiles needing to be replaced {self.tiles_to_replenish_at_turn_end}")
+        self.current_player.player_deck.replenish_tiles(self.tiles_to_replenish_at_turn_end)
+
         if self.current_player == self.player_two:
             self.current_player = self.player_one
         else:
             self.current_player = self.player_two
 
+
+        self.tiles_to_replenish_at_turn_end = []
         self.update_player_turn()
 
         print(f"It is player: {self.current_player.player_name} turn")

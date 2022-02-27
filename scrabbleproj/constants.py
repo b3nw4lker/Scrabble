@@ -60,7 +60,8 @@ IMAGE = {
     "X": pygame.transform.scale(pygame.image.load('assets/TileX.png'), (54, 54)),
     "Y": pygame.transform.scale(pygame.image.load('assets/TileY.png'), (54, 54)),
     "Z": pygame.transform.scale(pygame.image.load('assets/TileZ.png'), (54, 54)),
-    "BLANK": pygame.transform.scale(pygame.image.load('assets/TileBlank.png'), (54, 54))
+    "BLANK": pygame.transform.scale(pygame.image.load('assets/TileBlank.png'), (54, 54)),
+    "TileEmpty": pygame.transform.scale(pygame.image.load('assets/TileEmpty.png'), (54, 54)),
 }
 
 BONUS_TILE_LOCATIONS = {

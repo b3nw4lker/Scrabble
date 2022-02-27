@@ -11,9 +11,6 @@ class Player:
         self.player_deck = Deck(self.tile_bag, window)
         
         self.create_player_deck()
-               
-
-        print(self.player_deck.deck_tiles)
 
     def create_player_deck(self):
         self.player_deck.create_random_tile_deck()
