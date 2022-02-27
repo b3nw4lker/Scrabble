@@ -1,7 +1,9 @@
+import imp
 from pickle import TRUE
 import pygame
 from scrabbleproj.constants import WIDTH, HEIGHT
 from scrabbleproj.game_manager import GameManager
+from scrabbleproj.words import Words
 
 #Ben Walker 
 #Scrabble Project for NEA
@@ -18,6 +20,7 @@ def main():
     run = True
     clock = pygame.time.Clock()
     game_manager = GameManager(WIN)
+    words = Words()
 
     # Move all this into a player state class and then instantiate that class in the while True Loop
     while run:
@@ -43,6 +46,7 @@ def main():
             # Drawing the state
             # screen.fill((0, 0, 0))
             game_manager.draw()
+            
             pygame.display.flip()
 
             # Updating the state

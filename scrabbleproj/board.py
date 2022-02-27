@@ -35,7 +35,7 @@ class Board:
     def draw_player_score(self, player_name, location):
         pygame.font.init()
         font = pygame.font.Font('freesansbold.ttf', 12)
-        score = font.render(f"{player_name}'s Score :", True, BLACK)
+        score = font.render(f"{player_name}'s Score :{player_name.score}", True, BLACK)
         self.win.blit(score, (871, location[0]))
         player2scorebox = pygame.Rect(870, location[1], 100, 40)
         pygame.draw.rect(self.win, ORANGE, player2scorebox, 1)
@@ -68,4 +68,19 @@ class Board:
         # Calculate integer division
         return (position[0] // SQUARE_SIZE,
                 position[1] // SQUARE_SIZE)
+
+    def find_word_on_board(self):
+        print('W')
+        # word = []
+        # for col in self.board:
+        #     for tile in col:
+        #         letter_in_word = tile
+        #         print('this is ')
+        #         word.append(letter_in_word)
+        #         print(len(word))
+        #         print('it worked!!!!!!!')
+    
+    
+                
+
         

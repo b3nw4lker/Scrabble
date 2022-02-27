@@ -11,4 +11,17 @@ GUI
 8)give player tiles 
 9) swap tile place a tile 
 10) end turn button
-11) add player name input
+11) add player name inpu
+
+
+
+
+add with the end tile function
+
+n = 0
+for tiles_left in player deck:
+    n + 1
+
+x = len(7)- n
+for i in range(x):  
+    append to player deck random tile

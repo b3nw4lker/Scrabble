@@ -60,9 +60,9 @@ class Deck:
     def update_tile_in_deck(self, tile_object):
         self._draw_tile(tile_object)
 
-    def replenish_tiles(self, tiles_needing_replacing):
-        for tile in tiles_needing_replacing:
-            print(f"Tile needs replacing at location and index {tile}")
+    # def replenish_tiles(self, tiles_needing_replacing):
+    #     for tile in tiles_needing_replacing:
+    #         print(f"Tile needs replacing at location and index {tile}")
 
 
 

@@ -1,4 +1,6 @@
+from re import A
 from scrabbleproj.constants import POINTS, IMAGE
+
 
 
 class Tile:
@@ -12,4 +14,7 @@ class Tile:
         self.is_fixed = False
         self.booster_value = 0
         self.disabled = False
-
+        
+        
+        
+    

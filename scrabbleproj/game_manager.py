@@ -1,5 +1,5 @@
 import random
-from tkinter import Button
+
 
 import pygame
 
@@ -19,6 +19,9 @@ class GameManager:
         self.board = Board(self.window)
         self.tile_bag = TileBag()
         self.words = Words()
+        self.tile = Tile(self)
+        # self.word_being_played = []
+        # self.tile = Tile()
 
         print(f"Initial tile bag qty: {self.tile_bag.get_tile_bag_count()}")
         self.player_one = Player("Player One", self.tile_bag, self.window)
@@ -42,6 +45,7 @@ class GameManager:
         self.selected_tile_location = None
         self.tile_area_clicked = None
         self.tiles_to_replenish_at_turn_end = []
+        print(self.current_player.player_deck.deck_tiles)
 
         # self.event_actions = {
         #     'board_click': self.board.locations,
@@ -69,8 +73,20 @@ class GameManager:
             if endturn.isOver(cursor_location):
                 self.handle_end_turn()
 
-    def handle_board_removal(self, x, y):
-        Board.board[x][y] = object()
+    def handle_check_if_word(self): 
+        self.words.check_if_word()
+    
+    def handle_board_removal(self, cursor_location):#replacement and placing on to the board is making me want to cry i hate this part of coding
+        cell_clicked = self.board.get_tile_pos(cursor_location)
+        board_data_object_location = self.board.board[cell_clicked[0]][cell_clicked[1]]
+        if self.selected_tile:
+            self.board.board[cell_clicked[0]][cell_clicked[1]] = self.selected_tile
+            
+            
+            
+            
+     
+        # Board.board[x][y] = object()
 
     def handle_board_placement(self, cursor_location):
         cell_clicked = self.board.get_tile_pos(cursor_location)
@@ -84,26 +100,57 @@ class GameManager:
             self.current_player.player_deck.deck_tiles[self.current_player.player_deck.get_tile_clicked(cursor_location)] = blank_tile_placeholder
             self.current_player.player_deck.update_tile_in_deck(blank_tile_placeholder)
             self.board.update_tile(self.selected_tile, board_data_object_location.tile_location)
-            self.tiles_to_replenish_at_turn_end.append(self.selected_tile)
+            
+            # self.word_being_played.append(self.selected_tile.letter)
+            # self.tiles_to_replenish_at_turn_end.append(self.selected_tile)
             self.selected_tile = None
         #     We need to add new tiles at end of turn and re-draw deck
         else:
             print("Tile not selected from deck")
-
-    def handle_hand_replacement(self, position):
+    
+    
+    
+    
+    
+    
+    def handle_hand_replacement(self, position): #replacement and placing on to the board is making me want to cry i hate this part of coding 
         pass
+
+
+
+
+
 
     def handle_hand_select(self, position):
         self.tile_area_clicked = self.current_player.player_deck.get_tile_clicked(position)
         self.selected_tile = self.current_player.player_deck.deck_tiles[self.tile_area_clicked][0]
+        print(self.selected_tile.letter)
 
-        if self.selected_tile.disabled:
-            print("This is a placeholder tile")
-            return
+        #if self.selected_tile.disabled:
+           # print("This is a placeholder tile")
+            #return
 
         self.selected_tile_location = self.current_player.player_deck.deck_tiles[self.tile_area_clicked][1]
         self.selected_tile.clicked = True
         self.selected_tile.player_assigned = self.current_player
+
+
+
+
+
+    
+    #this isnt working 
+    def find_word(self, let):
+        n =  0
+        for row in self.board.board:
+            for let in row:
+                Tile(let).letter != None
+                n += 1
+                print(n)
+                
+
+
+
 
     def handle_tile_swap(self):
         if self.selected_tile:
@@ -118,30 +165,68 @@ class GameManager:
         else:
             print("click a tile to swap then press")
 
-    def handle_end_turn(self):
-        print(f"Tiles needing to be replaced {self.tiles_to_replenish_at_turn_end}")
-        self.current_player.player_deck.replenish_tiles(self.tiles_to_replenish_at_turn_end)
 
+
+
+
+
+
+    def handle_end_turn(self):
+        self.find_word(self,)
+        # print(self.word_being_played)
+        # word_to_be_checked = ''.join(self.word_being_played)
+        # print(word_to_be_checked)
+        # Words.check_if_word(self, word_to_be_checked)
+        
+       # print(f"Tiles needing to be replaced {self.tiles_to_replenish_at_turn_end}")
+        #self.current_player.player_deck.replenish_tiles(self.tiles_to_replenish_at_turn_end)
+        n = 0
+        for tiles_left in self.current_player.player_deck.deck_tiles:
+            n + 1
+        x = 7 - n
+        if n >= 1:
+            new_tile = (random.choice(self.tile_bag.tile_bag_items), self.selected_tile_location)
+            for i in range (x):
+                self.current_player.player_deck.deck_tiles.append(new_tile)
+            self.current_player.player_deck.update_tile_in_deck(new_tile)
+            
         if self.current_player == self.player_two:
             self.current_player = self.player_one
         else:
             self.current_player = self.player_two
-
-
-        self.tiles_to_replenish_at_turn_end = []
+            
+            
+        #self.tiles_to_replenish_at_turn_end = []
         self.update_player_turn()
 
         print(f"It is player: {self.current_player.player_name} turn")
+
+
+
+
+
 
     def update_player_turn(self):
         player_turn = Button((WHITE), 50, 815, 100, 40, (f'Its {self.current_player.player_name}s turn !'))
         players_go_button = player_turn
         players_go_button.draw_button(self.window)
         self.current_player.player_deck.draw_deck()
+    
+    def add_to_player_score(self):
+        print(self.current_player.score)
+        self.current_player.score += self.calc_score_to_add()
+    
+    
+    
+        
+        
+        
+        
 
+    
+        
     def draw(self):
         pass
 
     def update(self, delta):
-        # We are currently using clock.tick but could use this to make it all managed in the same place
         pass
