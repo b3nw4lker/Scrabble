@@ -3,11 +3,12 @@ import pygame
 from scrabbleproj.tile_bag import TileBag
 
 from .constants import BLACK, COLS, ROWS, WHITE, ORANGE, SQUARE_SIZE, BONUS_TILE_LOCATIONS
+from .tile import Tile
 
 
 class Board:
     def __init__(self, window):
-        self.board = [[object() for col in range(COLS)] for row in range(ROWS)]
+        self.board = [[Tile(None) for col in range(COLS)] for row in range(ROWS)]
         self.position = (0, 0) # Check this what is this??
 
         self._board_size = (15 * SQUARE_SIZE, 15 * SQUARE_SIZE)
@@ -27,6 +28,7 @@ class Board:
         self.win.fill(WHITE)
         for x in range(ROWS):
             for y in range(COLS):
+                self.board[x][y].tile_location = (x * SQUARE_SIZE, y * SQUARE_SIZE)
                 rect = pygame.Rect(x * SQUARE_SIZE, y * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE)
                 pygame.draw.rect(self.win, ORANGE, rect, 1)
 
@@ -38,23 +40,17 @@ class Board:
         player2scorebox = pygame.Rect(870, location[1], 100, 40)
         pygame.draw.rect(self.win, ORANGE, player2scorebox, 1)
 
-    # Swap Tile Button
-    # def _draw_swap_button(self):
-    #     button_pressed = False
-    #     pygame.font.init()
-    #     font = pygame.font.Font('freesansbold.ttf', 12)
-    #     score = font.render("Swap tile", True, BLACK)
-    #     self.win.blit(score, (510, 880))
-    #     swapbuttonbox = pygame.Rect(500, 870, 100, 40)
-    #     pygame.draw.rect(self.win, ORANGE, swapbuttonbox, 1)
-    #     pos = pygame.mouse.get_pos()
-      
-
     # triple word placement
     def _draw_tile_boosters(self):
+        grid_line = []
         for tile_name, tile_locations in BONUS_TILE_LOCATIONS.items():
+            grid_line.append(Tile(None))
             for tile in tile_locations:
+                self.board.append(grid_line)
                 self.win.blit(tile_name, tile)
+
+    def update_tile(self, tile, tile_location):
+        self.win.blit(tile.image, (tile_location[0], tile_location[1]))
     
     def _draw_tile_bag_count(self):
         ammount = self.tile_bag.get_tile_bag_count()
