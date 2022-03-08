@@ -15,6 +15,7 @@ from scrabbleproj.words import Words
 class GameManager:
 
     def __init__(self, window):
+        self.last_tile_placed = None
         self.window = window
         self.board = Board(self.window)
         self.tile_bag = TileBag()
@@ -73,8 +74,9 @@ class GameManager:
             if endturn.isOver(cursor_location):
                 self.handle_end_turn()
 
-    def handle_check_if_word(self): 
-        self.words.check_if_word()
+    def handle_check_if_word(self):
+        print("Running Word Check")
+        self.words.check_if_word(self.board, self.last_tile_placed)
     
     def handle_board_removal(self, cursor_location):#replacement and placing on to the board is making me want to cry i hate this part of coding
         cell_clicked = self.board.get_tile_pos(cursor_location)
@@ -96,6 +98,7 @@ class GameManager:
             self.current_player.player_deck.deck_tiles[self.current_player.player_deck.get_tile_clicked(cursor_location)] = blank_tile_placeholder
             self.current_player.player_deck.update_tile_in_deck(blank_tile_placeholder)
             self.board.update_tile(self.selected_tile, board_data_object_location.tile_location)
+            self.last_tile_placed = cell_clicked
             
             # self.word_being_played.append(self.selected_tile.letter)
             # self.tiles_to_replenish_at_turn_end.append(self.selected_tile)
@@ -120,15 +123,6 @@ class GameManager:
         self.selected_tile.clicked = True
         self.selected_tile.player_assigned = self.current_player
 
-    #this isnt working 
-    def find_word(self, let):
-        n = 0
-        for row in self.board.board:
-            for let in row:
-                Tile(let).letter != None
-                n += 1
-                print(n)
-
     def handle_tile_swap(self):
         if self.selected_tile:
             selected_tile_position_in_list = self.current_player.player_deck.get_location_in_deck(self.selected_tile)
@@ -143,23 +137,9 @@ class GameManager:
             print("click a tile to swap then press")
 
     def handle_end_turn(self):
-        self.find_word(self)
-        # print(self.word_being_played)
-        # word_to_be_checked = ''.join(self.word_being_played)
-        # print(word_to_be_checked)
-        # Words.check_if_word(self, word_to_be_checked)
-        
-        # print(f"Tiles needing to be replaced {self.tiles_to_replenish_at_turn_end}")
-        # self.current_player.player_deck.replenish_tiles(self.tiles_to_replenish_at_turn_end)
-        n = 0
-        for tiles_left in self.current_player.player_deck.deck_tiles:
-            n + 1
-        x = 7 - n
-        if n >= 1:
-            new_tile = (random.choice(self.tile_bag.tile_bag_items), self.selected_tile_location)
-            for i in range (x):
-                self.current_player.player_deck.deck_tiles.append(new_tile)
-            self.current_player.player_deck.update_tile_in_deck(new_tile)
+        print(self.last_tile_placed)
+        self.handle_check_if_word()
+
             
         if self.current_player == self.player_two:
             self.current_player = self.player_one
@@ -180,15 +160,6 @@ class GameManager:
     def add_to_player_score(self):
         print(self.current_player.score)
         self.current_player.score += self.calc_score_to_add()
-    
-    
-    
-        
-        
-        
-        
-
-    
         
     def draw(self):
         pass

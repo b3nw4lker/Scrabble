@@ -11,6 +11,8 @@ class Board:
         self.board = [[Tile(None) for col in range(COLS)] for row in range(ROWS)]
         self.position = (0, 0) # Check this what is this??
 
+        print(self.board)
+
         self._board_size = (15 * SQUARE_SIZE, 15 * SQUARE_SIZE)
         self._rect = pygame.Rect(self.position, self._board_size)
         self.win = window
@@ -79,4 +81,4 @@ class Board:
         #         word.append(letter_in_word)
         #         print(len(word))
         #         print('it worked!!!!!!!')
-        
+
