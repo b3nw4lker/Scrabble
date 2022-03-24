@@ -15,6 +15,7 @@ from scrabbleproj.words import Words
 class GameManager:
 
     def __init__(self, window):
+        self.last_tile_selected_in_hand = None
         self.last_tile_placed = None
         self.window = window
         self.board = Board(self.window)
@@ -90,13 +91,19 @@ class GameManager:
         cell_clicked = self.board.get_tile_pos(cursor_location)
         board_data_object_location = self.board.board[cell_clicked[0]][cell_clicked[1]]
 
+        print("board_data_object")
+        print(board_data_object_location)
+        print(cell_clicked)
+
         if self.selected_tile and not self.selected_tile.disabled:
             self.board.board[cell_clicked[0]][cell_clicked[1]] = self.selected_tile
             place_holder_tile = Tile(None)
             place_holder_tile.disabled = True
             blank_tile_placeholder = (place_holder_tile, self.selected_tile_location)
-            self.current_player.player_deck.deck_tiles[self.current_player.player_deck.get_tile_clicked(cursor_location)] = blank_tile_placeholder
             self.current_player.player_deck.update_tile_in_deck(blank_tile_placeholder)
+            print("Selected tile location")
+            print(self.last_tile_selected_in_hand)
+            self.current_player.player_deck.disable_tile(self.last_tile_selected_in_hand)
             self.board.update_tile(self.selected_tile, board_data_object_location.tile_location)
             self.last_tile_placed = cell_clicked
             
@@ -112,14 +119,23 @@ class GameManager:
 
     def handle_hand_select(self, position):
         self.tile_area_clicked = self.current_player.player_deck.get_tile_clicked(position)
+        print("tile bug")
+        print(self.tile_area_clicked)
         self.selected_tile = self.current_player.player_deck.deck_tiles[self.tile_area_clicked][0]
+        print(self.selected_tile)
         print(self.selected_tile.letter)
+
+        print("running letters")
+
+        for letter in self.current_player.player_deck.deck_tiles:
+            print(letter[0].disabled)
 
         #if self.selected_tile.disabled:
            # print("This is a placeholder tile")
             #return
 
         self.selected_tile_location = self.current_player.player_deck.deck_tiles[self.tile_area_clicked][1]
+        self.last_tile_selected_in_hand = self.selected_tile_location
         self.selected_tile.clicked = True
         self.selected_tile.player_assigned = self.current_player
 
@@ -140,7 +156,6 @@ class GameManager:
         print(self.last_tile_placed)
         self.handle_check_if_word()
 
-            
         if self.current_player == self.player_two:
             self.current_player = self.player_one
         else:

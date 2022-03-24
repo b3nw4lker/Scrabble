@@ -1,4 +1,3 @@
-import imp
 import pygame
 from scrabbleproj.tile_bag import TileBag
 
@@ -12,6 +11,9 @@ class Board:
         self.position = (0, 0) # Check this what is this??
 
         print(self.board)
+        for row in self.board:
+            print(row)
+            print('/n')
 
         self._board_size = (15 * SQUARE_SIZE, 15 * SQUARE_SIZE)
         self._rect = pygame.Rect(self.position, self._board_size)
@@ -48,7 +50,7 @@ class Board:
         for tile_name, tile_locations in BONUS_TILE_LOCATIONS.items():
             grid_line.append(Tile(None))
             for tile in tile_locations:
-                self.board.append(grid_line)
+                # self.board.append(grid_line)
                 self.win.blit(tile_name, tile)
 
     def update_tile(self, tile, tile_location):

@@ -45,9 +45,14 @@ class Deck:
 
         selected_tile = position[0] // SQUARE_SIZE
 
+        print("This is the selected tile")
+        print(selected_tile)
+
         if selected_tile < len(self.deck_tiles):
+            print("returning selected tile")
             return selected_tile
         else:
+            print("returning -1")
             return -1
 
     def get_location_in_deck(self, tile_object):
@@ -59,6 +64,12 @@ class Deck:
 
     def update_tile_in_deck(self, tile_object):
         self._draw_tile(tile_object)
+
+    def disable_tile(self, tile_location):
+        pass
+        # print("tile location")
+        # print(tile_location)
+        # self.deck_tiles[tile_location][0].disabled = True
 
     # def replenish_tiles(self, tiles_needing_replacing):
     #     for tile in tiles_needing_replacing:

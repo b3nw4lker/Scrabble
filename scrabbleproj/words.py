@@ -11,10 +11,92 @@ class Words:
         self.tileboost = TileBoost()
 
     def check_if_word(self, board, last_tile_placed):
-        print("In word check")
-        print(board)
-        print(last_tile_placed)
-        start_location = board.board[last_tile_placed[0]][last_tile_placed[1]]
+        horizontal_word = []
+        vertical_word = []
+
+        # FIXME: If we place the horizontal tile last we need to use _create_row_representation to generate row
+
+        row_representation = self._create_row_representation(board, last_tile_placed)
+
+        # Check if words are right
+        for index, tile in enumerate(row_representation, start=last_tile_placed[0]):
+            if row_representation[index].letter:
+                horizontal_word.append(row_representation[index])
+                vertical_word = self._vertical_word_check(board, index, last_tile_placed, vertical_word)
+                continue
+            break
+
+        # Check if words are left
+        negative_count = 1
+        for index, tile in enumerate(row_representation, start=last_tile_placed[0]):
+            adjusted_index = index - negative_count
+
+            if row_representation[adjusted_index].letter:
+                horizontal_word.insert(0, row_representation[adjusted_index])
+                negative_count += 2
+                vertical_word = self._vertical_word_check(board, index, last_tile_placed, vertical_word)
+                continue
+            break
+
+        if len(horizontal_word) == 1 and len(vertical_word) > 1:
+            horizontal_word.clear()
+        elif len(vertical_word) == 1 and len(horizontal_word) > 1:
+            vertical_word.clear()
+
+        print(f"Horizontal Words: {[word.letter for word in horizontal_word]}")
+        print(f"Vertical Words: {[word.letter for word in vertical_word]}")
+
+        word_exists = self.does_word_exist('word')
+
+        if word_exists:
+            self.score_word()
+        else:
+            pass
+
+    def _vertical_word_check(self, board, index, last_tile_placed, vertical_word):
+        cell_above = board.board[index][last_tile_placed[1] - 1]
+        cell_below = board.board[index][last_tile_placed[1] + 1]
+
+        if cell_above.letter:
+            for cell in board.board[index]:
+                if cell.letter:
+                    vertical_word.append(cell)
+
+        if cell_below.letter:
+            for cell in board.board[index]:
+                if cell.letter:
+                    vertical_word.append(cell)
+
+        return vertical_word
+
+    @staticmethod
+    def _create_row_representation(board, last_tile_placed):
+        board_representation = []
+        for row in board.board:
+            new_row = []
+            for letter in row:
+                new_row.append(letter.letter)
+
+            board_representation.append(new_row)
+        # Create row based on start location (the list is all flipped)
+
+        row_representation = []
+        for cell in range(15):
+            row_representation.append(board.board[cell][last_tile_placed[1]])
+
+        return row_representation
+
+    #     return message showing which words are fake.
+
+    # To return tiles to deck - we store all tiles placed in turn in a list, if turn can't be scored we run function to
+    # move all tiles form list back to deck
+
+    def score_word(self, word):
+        pass
+
+    def does_word_exist(self, word):
+        # If word does not exist return word / words that are fake
+        pass
 
     def calc_score_and_add(self):  # this should work
         final_word_points = 0
