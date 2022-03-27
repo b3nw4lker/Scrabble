@@ -10,11 +10,6 @@ class Board:
         self.board = [[Tile(None) for col in range(COLS)] for row in range(ROWS)]
         self.position = (0, 0) # Check this what is this??
 
-        print(self.board)
-        for row in self.board:
-            print(row)
-            print('/n')
-
         self._board_size = (15 * SQUARE_SIZE, 15 * SQUARE_SIZE)
         self._rect = pygame.Rect(self.position, self._board_size)
         self.win = window
@@ -23,6 +18,21 @@ class Board:
         self._draw_squares()
         self._draw_tile_boosters()
         self._draw_tile_bag_count()
+
+        self.display_board()
+
+    def display_board(self):
+        board = []
+        for row in self.board:
+            letter_row = []
+            for cell in row:
+                letter_row.append(cell.letter)
+
+            board.append(letter_row)
+
+        for row in board:
+            print(row)
+            print('')
 
     def clicked_in_board(self, cursor_location):
         return self._rect.collidepoint(cursor_location)

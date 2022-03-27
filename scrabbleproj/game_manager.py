@@ -15,6 +15,7 @@ from scrabbleproj.words import Words
 class GameManager:
 
     def __init__(self, window):
+        self.tile_prior_placement = None
         self.last_tile_selected_in_hand = None
         self.last_tile_placed = None
         self.window = window
@@ -63,9 +64,16 @@ class GameManager:
         cursor_location = list(pygame.mouse.get_pos())
         if event.type == pygame.MOUSEBUTTONUP:
             if self.board.clicked_in_board(cursor_location):
-                print("Cursor location")
-                print(cursor_location)
-                self.handle_board_placement(cursor_location)
+                print(f"EVENT BUTTON {event.button}")
+                if event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                    print("Removing board tile")
+                    print(f"Before removing tile {self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]].letter}")
+                    self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]] = self.tile_prior_placement
+                    self.board.update_tile(self.tile_prior_placement, self.tile_prior_placement.tile_location)
+                    print(f"After removing tile {self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]].letter}")
+                    # Update the image
+                else:
+                    self.handle_board_placement(cursor_location)
             # Determine which tile user has clicked onto
             if self.current_player.player_deck.clicked_in_deck(cursor_location):
                 self.handle_hand_select(cursor_location)
@@ -74,6 +82,8 @@ class GameManager:
                 self.handle_tile_swap()
             if endturn.isOver(cursor_location):
                 self.handle_end_turn()
+
+
 
     def handle_check_if_word(self):
         print("Running Word Check")
@@ -90,6 +100,7 @@ class GameManager:
     def handle_board_placement(self, cursor_location):
         cell_clicked = self.board.get_tile_pos(cursor_location)
         board_data_object_location = self.board.board[cell_clicked[0]][cell_clicked[1]]
+        self.tile_prior_placement = self.board.board[cell_clicked[0]][cell_clicked[1]]
 
         print("board_data_object")
         print(board_data_object_location)
@@ -113,6 +124,8 @@ class GameManager:
         #     We need to add new tiles at end of turn and re-draw deck
         else:
             print("Tile not selected from deck")
+
+        self.board.display_board()
 
     def handle_hand_replacement(self, position): #replacement and placing on to the board is making me want to cry i hate this part of coding 
         pass

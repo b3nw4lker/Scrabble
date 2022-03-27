@@ -13,6 +13,7 @@ class Words:
     def check_if_word(self, board, last_tile_placed):
         horizontal_word = []
         vertical_word = []
+        print(f"Last Tile Placed {board.board[last_tile_placed[0]][last_tile_placed[1]].letter}")
 
         # FIXME: If we place the horizontal tile last we need to use _create_row_representation to generate row
 
@@ -53,7 +54,8 @@ class Words:
         else:
             pass
 
-    def _vertical_word_check(self, board, index, last_tile_placed, vertical_word):
+    @staticmethod
+    def _vertical_word_check(board, index, last_tile_placed, vertical_word):
         cell_above = board.board[index][last_tile_placed[1] - 1]
         cell_below = board.board[index][last_tile_placed[1] + 1]
 

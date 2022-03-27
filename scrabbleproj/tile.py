@@ -14,6 +14,9 @@ class Tile:
         self.is_fixed = False
         self.booster_value = 0
         self.disabled = False
+
+    def update_tile_image(self, letter):
+        self.image = IMAGE.get(letter)
         
         
         
