@@ -1,11 +1,12 @@
 import random
+from turtle import width
 
 
 import pygame
 
 from scrabbleproj.board import Board
 from scrabbleproj.buttons import Button, swapbutton, endturn
-from scrabbleproj.constants import WHITE, DECK_Y_AXIS
+from scrabbleproj.constants import BLACK, HEIGHT, WHITE, DECK_Y_AXIS, WIDTH
 from scrabbleproj.player import Player
 from scrabbleproj.tile import Tile
 from scrabbleproj.tile_bag import TileBag
@@ -36,11 +37,13 @@ class GameManager:
 
         self.swapbutton = swapbutton
         self.end_turn_button = endturn
+        
 
         self.board.draw_player_score(self.player_one, (101, 100))
         self.board.draw_player_score(self.player_two, (401, 400))
         self.swapbutton.draw_button(self.window)
         self.end_turn_button.draw_button(self.window)
+        self.rules_button.draw_button(self.window)
 
         print(f"Tile bag qty after player one creation: {self.tile_bag.get_tile_bag_count()}")
 
@@ -165,6 +168,15 @@ class GameManager:
         else:
             print("click a tile to swap then press")
 
+    def handle_rules(self):
+        WIN2 = pygame.display.set_mode((600, 600))
+        pygame.display.set_caption('rules')
+        WIN2.fill(BLACK)
+       
+            
+        
+        
+    
     def handle_end_turn(self):
         print(self.last_tile_placed)
         self.handle_check_if_word()

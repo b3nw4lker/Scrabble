@@ -35,6 +35,7 @@ swapbutton = Button((ORANGE) , 500, 870, 100, 40, 'Swap')
 endturn = Button((ORANGE) , 620, 870, 100, 40, 'End Turn')
 
 
+
                     
 
 
@@ -42,12 +43,12 @@ endturn = Button((ORANGE) , 620, 870, 100, 40, 'End Turn')
 
 
 
-class SwapButton():
+# class SwapButton():
+    
+#     def __init__(self, height, width):
+#         super().__init__(height, width)
+#     #     Super means we instantiate the parent class using the arguments passed to the child's
+#     #     class constructor (__init__)
 
-    def __init__(self, height, width):
-        super().__init__(height, width)
-    #     Super means we instantiate the parent class using the arguments passed to the child's
-    #     class constructor (__init__)
-
-    def some_other_swap_stuff(self):
-        pass
+#     def some_other_swap_stuff(self):
+#         pass
