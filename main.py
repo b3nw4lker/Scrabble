@@ -1,5 +1,5 @@
 import pygame
-from scrabbleproj.constants import BLACK, ORANGE, WIDTH, HEIGHT, WHITE
+from scrabbleproj.constants import BLACK, ORANGE, SCRABBLEBACKGROUND, WIDTH, HEIGHT, WHITE
 from scrabbleproj.game_manager import GameManager
 from scrabbleproj.words import Words
 
@@ -52,10 +52,8 @@ def rules():
                 main_menu()
         pygame.display.update()
         
-
-
 def main_menu():
-    WIN.fill(BLACK)
+    WIN.blit(SCRABBLEBACKGROUND,(0,0))
     run = True
     while run is True:
         MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -63,13 +61,13 @@ def main_menu():
 
         pygame.font.init()
         font = pygame.font.Font('freesansbold.ttf', 140)
-        playtext = font.render(("PLAY"),True, WHITE)
+        playtext = font.render(("  PLAY"),True, WHITE)
         WIN.blit(playtext,(300,100,150,500))
         playbutton = pygame.Rect(300,100, 500,120)
         pygame.draw.rect(WIN, WHITE, playbutton, 1,)
         
         font = pygame.font.Font('freesansbold.ttf', 140)
-        quittext = font.render(("QUIT"),True, WHITE)
+        quittext = font.render(("  QUIT"),True, WHITE)
         WIN.blit(quittext,(300,500,170,500))
         quitbutton = pygame.Rect(300,500, 500,120)
         pygame.draw.rect(WIN, WHITE, quitbutton, 1,)

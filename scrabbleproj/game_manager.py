@@ -43,7 +43,7 @@ class GameManager:
         self.board.draw_player_score(self.player_two, (401, 400))
         self.swapbutton.draw_button(self.window)
         self.end_turn_button.draw_button(self.window)
-        self.rules_button.draw_button(self.window)
+        
 
         print(f"Tile bag qty after player one creation: {self.tile_bag.get_tile_bag_count()}")
 
