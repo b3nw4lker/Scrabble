@@ -1,3 +1,6 @@
+from shutil import move
+from subprocess import ABOVE_NORMAL_PRIORITY_CLASS
+from tkinter import BOTH
 from assets.allwords import worddict
 from scrabbleproj.constants import POINTS
 from scrabbleproj.tileboosters import TileBoost
@@ -9,6 +12,7 @@ class Words:
         self.word_to_calc = ''
         self.points_per_letter = POINTS
         self.tileboost = TileBoost()
+        self.word_score = 0 
 
     def check_if_word(self, board, last_tile_placed):
         horizontal_word = []
@@ -46,15 +50,72 @@ class Words:
 
         print(f"Horizontal Words: {[word.letter for word in horizontal_word]}")
         print(f"Vertical Words: {[word.letter for word in vertical_word]}")
-
-        word_exists = self.does_word_exist('word')
-
-        if word_exists:
-            self.score_word()
+        
+        
+        print(''.join([word.letter.lower() for word in vertical_word]))
+        print(''.join([word.letter.lower() for word in horizontal_word]))
+        
+        print("Before word check")
+        
+        vertical_word_check = ''
+        horizontal_word_check = ''
+        
+        if len(horizontal_word) < 1:
+            print('not a  hori word')
+            horizontal_word_check = True #make it true as the word has no size
         else:
-            pass
+            horizontal_word_check = self.does_word_exist(''.join([word.letter.lower() for word in horizontal_word])) #List comprehension
+            
+            
+    
+    #verticle word getting boolean for if its true     
+        if len(vertical_word) < 1:
+            print('not a vert word') 
+            vertical_word_check = True
+            
+        else:
+            vertical_word_check = self.does_word_exist(''.join([word.letter.lower() for word in vertical_word]))#used so that it doesnt recognise the rutrned word as an object
 
-    @staticmethod
+        
+        if horizontal_word_check == True and vertical_word_check == True:
+            
+            if len(vertical_word) != 0:
+                return self.score_word(vertical_word)
+                 
+            else:
+                pass
+            
+            if len(horizontal_word) != 0:
+                return self.score_word(horizontal_word)
+            else:
+                pass
+            
+            
+        
+        elif horizontal_word_check == False or vertical_word_check == False:
+            print('we cant score as isnt word')
+
+
+            
+        
+        
+        
+        
+        
+
+        
+        
+    @staticmethod #doesn't need to have context of class (static method)
+    def does_word_exist(word):
+        # print(worddict.get(word))
+        word_evaluation = worddict.get(word) == 1
+        print(f"word {word} is {word_evaluation}")
+        return word_evaluation
+    
+        
+    
+
+    @staticmethod #doesnt need to have context of class (static method) i can call without instantiating this will mean my code run quicker
     def _vertical_word_check(board, index, last_tile_placed, vertical_word):
         cell_above = board.board[index][last_tile_placed[1] - 1]
         cell_below = board.board[index][last_tile_placed[1] + 1]
@@ -71,7 +132,7 @@ class Words:
 
         return vertical_word
 
-    @staticmethod
+    @staticmethod #doesnt need to have context of class (static method) i can call without instantiating - this will mean my code run quicker
     def _create_row_representation(board, last_tile_placed):
         board_representation = []
         for row in board.board:
@@ -94,67 +155,18 @@ class Words:
     # move all tiles form list back to deck
 
     def score_word(self, word):
-        pass
+    
+        for letter in word:
+            self.word_score += POINTS.get(letter.letter.upper())
+        print(self.word_score)
+        return self.word_score
+            
+            
+            
 
-    def does_word_exist(self, word):
-        # If word does not exist return word / words that are fake
-        pass
-
-    def calc_score_and_add(self):  # this should work
-        final_word_points = 0
-        for letter in self.word_to_calc:
-            points_achieved_for_letter = self.points_per_letter.get(str(letter))
-            final_word_points += points_achieved_for_letter
-
-        if self.tileboost.double_letter:
-            pass
-
-        if self.tileboost.double_word:
-            final_word_points *= 2
-
-        if self.tileboost.triple_letter:
-            pass
-
-        if self.tileboost.triple_word:
-            final_word_points *= 3
-
-        self.game_man.current_player.score += final_word_points
+   
 
 
-    def word_lookup(self):
-        pass
-    # store the location the player has placed their first tile (if player picks up tile and moves it we need to reset to new locations
-    # on turn end from location the first tile was placed during turn, iterate left on board, right on board to create a word (break when there no tile)
-    # iterate vertical on board from each horizontal tile
-    #
-    # word is SIALN
-    #
-    # A is placed first
-    #
-    # word = ["A"]
-    #
-    # horizontal
-    # go left on board:
-    #     check_if_vertical()
-    #     prepend(I)
-    #     if check_if_vertical == true set a flag with cel location
-    #     word = ["I","A"]
-    #     prepend(S)
-    #     word = ["S","I","A"]
-    #     break (no more tiles)
-    #
-    # go right on board:
-    #     check_if_vertical()
-    #     append(L)
-    #     word = ["S","I","A", "L"]
-    #     append(N)
-    #     word = ["S","I","A", "L", "N"]
-    #     break (no more tiles)
-    #
-    #
-    # vertical
-    # if vertical cell location:
-    #     go up and go down as per above to form word
 
 
 

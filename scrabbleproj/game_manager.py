@@ -90,7 +90,16 @@ class GameManager:
 
     def handle_check_if_word(self):
         print("Running Word Check")
-        self.words.check_if_word(self.board, self.last_tile_placed)
+        word_score = self.words.check_if_word(self.board, self.last_tile_placed)
+        print('player score')
+        if type(word_score) == int:
+            self.current_player.score += word_score
+        else:
+            print("not a word bud")
+        
+        print(f"player 1 score = {self.player_one.score}")
+        print(f"player 2 score = {self.player_two.score}")
+        
     
     def handle_board_removal(self, cursor_location):#replacement and placing on to the board is making me want to cry i hate this part of coding
         cell_clicked = self.board.get_tile_pos(cursor_location)
