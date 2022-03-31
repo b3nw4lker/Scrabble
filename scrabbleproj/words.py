@@ -1,5 +1,4 @@
 from shutil import move
-from subprocess import ABOVE_NORMAL_PRIORITY_CLASS
 from tkinter import BOTH
 from assets.allwords import worddict
 from scrabbleproj.constants import POINTS
@@ -89,8 +88,6 @@ class Words:
                 return self.score_word(horizontal_word)
             else:
                 pass
-            
-            
         
         elif horizontal_word_check == False or vertical_word_check == False:
             print('we cant score as isnt word')

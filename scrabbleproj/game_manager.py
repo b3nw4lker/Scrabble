@@ -28,8 +28,8 @@ class GameManager:
         # self.tile = Tile()
 
         print(f"Initial tile bag qty: {self.tile_bag.get_tile_bag_count()}")
-        self.player_one = Player("Player One", self.tile_bag, self.window)
-        self.player_two = Player("Player Two", self.tile_bag, self.window)
+        self.player_one = Player("Player One", self.tile_bag, self.window, (101, 100))
+        self.player_two = Player("Player Two", self.tile_bag, self.window, (401, 400))
 
         self.turn_end = False
         self.current_player = self.player_one
@@ -37,10 +37,9 @@ class GameManager:
 
         self.swapbutton = swapbutton
         self.end_turn_button = endturn
-        
 
-        self.board.draw_player_score(self.player_one, (101, 100))
-        self.board.draw_player_score(self.player_two, (401, 400))
+        self.board.draw_player_score(self.player_one)
+        self.board.draw_player_score(self.player_two)
         self.swapbutton.draw_button(self.window)
         self.end_turn_button.draw_button(self.window)
         
@@ -99,6 +98,8 @@ class GameManager:
         
         print(f"player 1 score = {self.player_one.score}")
         print(f"player 2 score = {self.player_two.score}")
+
+        self.board.draw_player_score(self.current_player)
         
     
     def handle_board_removal(self, cursor_location):#replacement and placing on to the board is making me want to cry i hate this part of coding

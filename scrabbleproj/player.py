@@ -5,12 +5,14 @@ from scrabbleproj.deck import Deck
 
 
 class Player():
-    def __init__(self, player_name, tile_bag, window):
+    def __init__(self, player_name, tile_bag, window, score_location):
         self.player_name = player_name
         self.tile_bag = tile_bag
         self.window = window
         self.score = 0
         self.player_deck = Deck(self.tile_bag, window)
+        self.score_location = score_location
+
 
         
         self.create_player_deck()
