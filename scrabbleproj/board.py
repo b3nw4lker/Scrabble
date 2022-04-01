@@ -14,10 +14,8 @@ class Board:
         self._rect = pygame.Rect(self.position, self._board_size)
         self.win = window
         self.selected_tile = None
-        self.tile_bag = TileBag()
         self._draw_squares()
         self._draw_tile_boosters()
-        self._draw_tile_bag_count()
 
         self.display_board()
 
@@ -47,12 +45,12 @@ class Board:
                 pygame.draw.rect(self.win, ORANGE, rect, 1)
 
     def draw_player_score(self, player):
+        player2scorebox = pygame.Rect(870, player.score_location[1], 150, 40)
+        pygame.draw.rect(self.win, WHITE, player2scorebox)
         pygame.font.init()
         font = pygame.font.Font('freesansbold.ttf', 11)
         score = font.render(f"{player.player_name}'s Score : {player.score}", True, BLACK)
         self.win.blit(score, (871, player.score_location[0]))
-        player2scorebox = pygame.Rect(870, player.score_location[1], 100, 40)
-        pygame.draw.rect(self.win, WHITE, player2scorebox, 1)
 
     # triple word placement
     def _draw_tile_boosters(self):
@@ -66,14 +64,15 @@ class Board:
     def update_tile(self, tile, tile_location):
         self.win.blit(tile.image, (tile_location[0], tile_location[1]))
     
-    def _draw_tile_bag_count(self):
-        ammount = self.tile_bag.get_tile_bag_count()
+    def draw_tile_bag_count(self, tile_bag):
+        ammount = tile_bag.get_tile_bag_count()
+        print (ammount)
         pygame.font.init()
         font = pygame.font.Font('freesansbold.ttf', 11)
-        tile_bag_counter = font.render("Tiles Remaining :" + str(ammount - 14), True, BLACK)
+        tile_bag_counter = font.render("Tiles Remaining :" + str(ammount) , True, BLACK)
         self.win.blit(tile_bag_counter, (810, 880))
         tilebagbox = pygame.Rect(800, 870, 150, 40)
-        pygame.draw.rect(self.win, WHITE, tilebagbox, 1)
+        pygame.draw.rect(self.win, WHITE, tilebagbox)
 
     def get_tile_pos(self, position):
         position[0] -= self.position[0]

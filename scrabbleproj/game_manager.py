@@ -27,10 +27,12 @@ class GameManager:
         # self.word_being_played = []
         # self.tile = Tile()
 
-        print(f"Initial tile bag qty: {self.tile_bag.get_tile_bag_count()}")
+        
         self.player_one = Player("Player One", self.tile_bag, self.window, (101, 100))
         self.player_two = Player("Player Two", self.tile_bag, self.window, (401, 400))
 
+        print(f"Initial tile bag qty: {self.tile_bag.get_tile_bag_count()}")
+        
         self.turn_end = False
         self.current_player = self.player_one
         self.update_player_turn()
@@ -43,9 +45,13 @@ class GameManager:
         self.swapbutton.draw_button(self.window)
         self.end_turn_button.draw_button(self.window)
         
+        
+        
 
-        print(f"Tile bag qty after player one creation: {self.tile_bag.get_tile_bag_count()}")
-
+        print(f"Tile bag qty after player creation: {self.tile_bag.get_tile_bag_count()}")
+        
+        
+        self.board.draw_tile_bag_count(self.tile_bag)
         self.selected_tile = None
         self.selected_tile_location = None
         self.tile_area_clicked = None
@@ -190,6 +196,8 @@ class GameManager:
     def handle_end_turn(self):
         print(self.last_tile_placed)
         self.handle_check_if_word()
+        self.board.draw_tile_bag_count(self.tile_bag)
+        
 
         if self.current_player == self.player_two:
             self.current_player = self.player_one
