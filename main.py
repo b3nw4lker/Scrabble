@@ -1,5 +1,5 @@
 import pygame
-from scrabbleproj.constants import BLACK, ORANGE, SCRABBLEBACKGROUND, WIDTH, HEIGHT, WHITE
+from scrabbleproj.constants import BLACK, ORANGE, SCRABBLEBACKGROUND, WIDTH, HEIGHT, WHITE, RULES
 from scrabbleproj.game_manager import GameManager
 from scrabbleproj.words import Words
 
@@ -46,6 +46,17 @@ def rules():
     WIN.fill(BLACK)
     run = True
     while run is True:
+        
+        pygame.font.init()
+        pygame.font.init()
+        font = pygame.font.Font('freesansbold.ttf', 20)
+        playtext = font.render((f"{RULES}"),True, WHITE)
+        WIN.blit(playtext,(10,10,50,10))
+        
+        
+        
+        
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False

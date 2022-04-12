@@ -132,6 +132,7 @@ class GameManager:
             blank_tile_placeholder = (place_holder_tile, self.selected_tile_location)
             self.current_player.player_deck.update_tile_in_deck(blank_tile_placeholder)
             print("Selected tile location")
+            print(cell_clicked)
             print(self.last_tile_selected_in_hand)
             self.current_player.player_deck.disable_tile(self.last_tile_selected_in_hand)
             self.board.update_tile(self.selected_tile, board_data_object_location.tile_location)

@@ -78,5 +78,37 @@ BONUS_TILE_LOCATIONS = {
                       (540, 216), (540, 540), (594, 162), (594, 594), (648, 108), (648, 648), (702, 54), (702, 702)],
     STARTTILE: [(378, 378)]
 }
+BONUS_TILE_COORDS = {
+    "TRIPPLEWORDCOORDS" : [(0,0), (0,6), (0,14), (6,0), (6,14), (14,0), (14,6), (14,14)],
+    "TRIPPLELETTERCOORDS" : [(1,5), (1,9), (5,1), (5,5), (5,9), (5,13), (9,1), (9,5), (9,9), (9,13), (13,5), (13,9)],
+    "DOUBLEWORDCOORDS" : [(1,1) (2,2), (3,3), (4,4), (13,13), (12,12), (11,11), (10,10), (1,13) (2,12), (3,11), (4,10), (13,13), (12,12), (11,11), (10,10) ],
+    "DOUBLELETTERCOORDS" : [(0,3), (0,11), (2,6), (2,8), (3,0) (3,7), (3,14), (6,2), (6,6), (6,8), (6,12), (7,3), (7,11), (8,2),(8,6),(8,8),(8,12), (11,0),(11,7),(11,14), (12,6),(12,8), (14,3),(14,11)]   
+}
 
+RULES = '''
+Players must combine two or more of his or her letters to form a word
+
+After each go a player can collect the same number of tiles they used if there are enough tiles left in the bag.
+
+New words may be formed by:
+o	Adding one or more letters to a word or letters already on the board.
+o	Placing a word at right angles to a word already on the board. The new word must use one of the letters already on the board or must add a letter to i
+o	Placing a complete word parallel to a word already played
+
+No tile may be shifted or replaced after it has been played and scored.
+
+You may use a turn to swap all, some, or none of the letters in your deck.
+
+The game ends when all letters have been drawn and one player uses their last later
+'''
 # BOARD_LIST = []           
+
+
+
+
+
+#PSUEDO CODE FOR SCORE 
+# for tile.tileposition in word made:
+#     if tile.position is in BONUSTILECOORDS(triplewordecoordselection):
+#       score x 3
+#etc...
