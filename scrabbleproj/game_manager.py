@@ -6,7 +6,7 @@ import pygame
 
 from scrabbleproj.board import Board
 from scrabbleproj.buttons import Button, swapbutton, endturn
-from scrabbleproj.constants import BLACK, HEIGHT, WHITE, DECK_Y_AXIS, WIDTH
+from scrabbleproj.constants import BLACK, HEIGHT, WHITE, DECK_Y_AXIS, WIDTH, BONUS_TILE_COORDS
 from scrabbleproj.player import Player
 from scrabbleproj.tile import Tile
 from scrabbleproj.tile_bag import TileBag
@@ -79,7 +79,18 @@ class GameManager:
                     self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]] = self.tile_prior_placement
                     self.board.update_tile(self.tile_prior_placement, self.tile_prior_placement.tile_location)
                     print(f"After removing tile {self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]].letter}")
-                    # Update the image
+                    if self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_WORD_COORDS"):
+                        pass
+                    elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_LETTER_COORDS"):
+                        pass
+                    elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("DOUBLE_WORD_COORDS"):
+                        pass
+                    elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("DOUBLE_LETTER_COORDS"):
+                        pass
+                    else:
+                        pass
+                        
+                        
                 else:
                     self.handle_board_placement(cursor_location)
             # Determine which tile user has clicked onto
@@ -107,14 +118,6 @@ class GameManager:
 
         self.board.draw_player_score(self.current_player)
         
-    
-    def handle_board_removal(self, cursor_location):#replacement and placing on to the board is making me want to cry i hate this part of coding
-        cell_clicked = self.board.get_tile_pos(cursor_location)
-        board_data_object_location = self.board.board[cell_clicked[0]][cell_clicked[1]]
-        if self.selected_tile:
-            self.board.board[cell_clicked[0]][cell_clicked[1]] = self.selected_tile
-
-        # Board.board[x][y] = object()
 
     def handle_board_placement(self, cursor_location):
         cell_clicked = self.board.get_tile_pos(cursor_location)
@@ -125,7 +128,7 @@ class GameManager:
         print(board_data_object_location)
         print(cell_clicked)
 
-        if self.selected_tile and not self.selected_tile.disabled:
+        if self.selected_tile and self.selected_tile.disabled is False:
             self.board.board[cell_clicked[0]][cell_clicked[1]] = self.selected_tile
             place_holder_tile = Tile(None)
             place_holder_tile.disabled = True
@@ -133,10 +136,18 @@ class GameManager:
             self.current_player.player_deck.update_tile_in_deck(blank_tile_placeholder)
             print("Selected tile location")
             print(cell_clicked)
+            self.selected_tile.tile_location = cell_clicked
+            print(f"Bens edited tile location {self.selected_tile.tile_location}")
             print(self.last_tile_selected_in_hand)
             self.current_player.player_deck.disable_tile(self.last_tile_selected_in_hand)
             self.board.update_tile(self.selected_tile, board_data_object_location.tile_location)
             self.last_tile_placed = cell_clicked
+            
+            self.selected_tile.disabled = True
+            #the change i did which when a tile is placed removes it from the players deck on placement (interferes )
+            # selected_tile_position_in_list = self.current_player.player_deck.get_location_in_deck(self.selected_tile)
+            # self.current_player.player_deck.deck_tiles.pop(selected_tile_position_in_list)
+            
             
             # self.word_being_played.append(self.selected_tile.letter)
             # self.tiles_to_replenish_at_turn_end.append(self.selected_tile)
@@ -147,8 +158,15 @@ class GameManager:
 
         self.board.display_board()
 
-    def handle_hand_replacement(self, position): #replacement and placing on to the board is making me want to cry i hate this part of coding 
-        pass
+    def handle_hand_replacement(self):
+        if len(self.current_player.player_deck.deck_tiles) < 7:
+            for i in range(7 - (len(self.current_player.player_deck.deck_tiles))):
+                print('this is working ')
+                new_tile = random.choice(self.tile_bag.tile_bag_items)
+                self.current_player.player_deck.deck_tiles.append(new_tile)
+                
+        else:
+            pass
 
     def handle_hand_select(self, position):
         self.tile_area_clicked = self.current_player.player_deck.get_tile_clicked(position)

@@ -1,7 +1,7 @@
 from shutil import move
 from tkinter import BOTH
 from assets.allwords import worddict
-from scrabbleproj.constants import POINTS
+from scrabbleproj.constants import BONUS_TILE_COORDS, POINTS
 from scrabbleproj.tileboosters import TileBoost
 
 
@@ -152,10 +152,42 @@ class Words:
     # move all tiles form list back to deck
 
     def score_word(self, word):
+        tripple_letter_locations = BONUS_TILE_COORDS.get("TRIPPLE_LETTER_COORDS")
+        double_letter_locations = BONUS_TILE_COORDS.get("DOUBLE_LETTER_CORDS") 
     
         for letter in word:
-            self.word_score += POINTS.get(letter.letter.upper())
+           # if letter.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_LETTER_COORDS").values():
+            if letter.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_LETTER_COORDS"):
+                booster_points = POINTS.get(letter.letter.upper())
+                booster_points *= 3 #triple letter
+                self.word_score += booster_points
+                
+            elif letter.tile_location in BONUS_TILE_COORDS.get("DOUBLE_LETTER_COORDS"):
+                booster_points = POINTS.get(letter.letter.upper())
+                booster_points *= 2 #double letter 
+                self.word_score += booster_points
+                
+            else:
+                self.word_score += POINTS.get(letter.letter.upper())
+
+
+        for letter in word:
+            if letter.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_WORD_COORDS"):
+                print("tripl the word score")
+                self.word_score *= 3 #if tripple word
+            if letter.tile_location in BONUS_TILE_COORDS.get("DOUBLE_WORD_COORDS"):
+                self.word_score *= 2 #if double word    
+            #word can be in both double word or triple letter so would need if statements rather than elif 
+            
+            
         print(self.word_score)
+        
+        
+        #PSUEDO CODE FOR SCORE 
+        
+#       for tile.tileposition in word made:
+#           if tile position is in BONUSTILECOORDS(triplewordecoordselection):
+#               score x 3
         return self.word_score
             
             
