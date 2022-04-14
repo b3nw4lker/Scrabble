@@ -1,3 +1,4 @@
+from hashlib import blake2b
 import pygame
 from scrabbleproj.tile_bag import TileBag
 
@@ -68,11 +69,15 @@ class Board:
         ammount = tile_bag.get_tile_bag_count()
         print (ammount)
         pygame.font.init()
+        tilebagbox = pygame.Rect(800, 870, 150, 40)
+        pygame.draw.rect(self.win, WHITE, tilebagbox, )
         font = pygame.font.Font('freesansbold.ttf', 11)
         tile_bag_counter = font.render("Tiles Remaining :" + str(ammount) , True, BLACK)
+        pygame.draw.rect(self.win, ORANGE, tilebagbox, 1)
         self.win.blit(tile_bag_counter, (810, 880))
-        tilebagbox = pygame.Rect(800, 870, 150, 40)
-        pygame.draw.rect(self.win, WHITE, tilebagbox)
+        
+        
+        print("drawn")
 
     def get_tile_pos(self, position):
         position[0] -= self.position[0]

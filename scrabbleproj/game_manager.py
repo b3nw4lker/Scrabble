@@ -79,16 +79,17 @@ class GameManager:
                     self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]] = self.tile_prior_placement
                     self.board.update_tile(self.tile_prior_placement, self.tile_prior_placement.tile_location)
                     print(f"After removing tile {self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]].letter}")
-                    if self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_WORD_COORDS"):
-                        pass
-                    elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_LETTER_COORDS"):
-                        pass
-                    elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("DOUBLE_WORD_COORDS"):
-                        pass
-                    elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("DOUBLE_LETTER_COORDS"):
-                        pass
-                    else:
-                        pass
+                    self.handle_reactivation()
+                    # if self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_WORD_COORDS"):
+                    #     pass
+                    # elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_LETTER_COORDS"):
+                    #     pass
+                    # elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("DOUBLE_WORD_COORDS"):
+                    #     pass
+                    # elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("DOUBLE_LETTER_COORDS"):
+                    #     pass
+                    # else: #for normal tiles 
+                    #     pass
                         
                         
                 else:
@@ -159,14 +160,26 @@ class GameManager:
         self.board.display_board()
 
     def handle_hand_replacement(self):
-        if len(self.current_player.player_deck.deck_tiles) < 7:
-            for i in range(7 - (len(self.current_player.player_deck.deck_tiles))):
-                print('this is working ')
+        copy_of_player_deck = self.current_player.player_deck.deck_tiles.copy() #copying the player deck so that it doesnt point to the same object
+        for index, tile in enumerate(copy_of_player_deck):
+            print(tile)
+            if tile[0].disabled:
+                self.current_player.player_deck.deck_tiles.pop(index)
                 new_tile = random.choice(self.tile_bag.tile_bag_items)
-                self.current_player.player_deck.deck_tiles.append(new_tile)
+                self.current_player.player_deck.deck_tiles.insert(index, (new_tile, tile[1]))
+                self.tile_bag.tile_bag_items.remove(new_tile)
+                print("disabled tile")
                 
-        else:
-            pass
+    def handle_reactivation(self):
+        print('the tile')
+        print(self.last_tile_placed)
+        self.last_tile_placed[1].disabled = False
+        self.board.update_tile(self.last_tile_placed)
+
+        
+             
+                
+        
 
     def handle_hand_select(self, position):
         self.tile_area_clicked = self.current_player.player_deck.get_tile_clicked(position)
@@ -215,6 +228,7 @@ class GameManager:
     def handle_end_turn(self):
         print(self.last_tile_placed)
         self.handle_check_if_word()
+        self.handle_hand_replacement()
         self.board.draw_tile_bag_count(self.tile_bag)
         
 

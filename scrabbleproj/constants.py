@@ -23,6 +23,7 @@ DOUBLEWORDIMG = pygame.transform.scale(pygame.image.load('assets/doubleword.png'
 TRIPLELETTERIMG = pygame.transform.scale(pygame.image.load('assets/tripleletter.png'), (54, 54))
 TRIPLEWORDIMG = pygame.transform.scale(pygame.image.load('assets/tripleword.png'), (54, 54))
 STARTTILE = pygame.transform.scale(pygame.image.load('assets/starttile.png'), (54, 54))
+BLANKBOARDTILE = pygame.transform.scale(pygame.image.load('assets/blankboardtile.png'), (54, 54))
 
 POINTS = {"A": 1, "C": 3, "B": 3, "E": 1, "D": 2, "G": 2,
           "F": 4, "I": 1, "H": 4, "K": 5, "J": 8, "M": 3,
