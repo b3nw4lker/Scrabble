@@ -35,6 +35,16 @@ class Deck:
 
         for tile_object in self.deck_tiles:
             self._draw_tile(tile_object)
+            
+    def draw_deck_partially(self):
+        
+        for tile_object in self.deck_tiles:
+            if tile_object[0] is None:
+                self._draw_tile(tile_object)
+            else:
+                pass
+
+    
 
     def _draw_tile(self, tile):
         self.win.blit(tile[0].image, (tile[1], DECK_Y_AXIS))

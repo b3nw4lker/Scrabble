@@ -1,4 +1,4 @@
-from hashlib import blake2b
+
 import pygame
 from scrabbleproj.tile_bag import TileBag
 
@@ -9,7 +9,7 @@ from .tile import Tile
 class Board:
     def __init__(self, window):
         self.board = [[Tile(None) for col in range(COLS)] for row in range(ROWS)]
-        self.position = (0, 0) # Check this what is this??
+        self.position = (0, 0) 
 
         self._board_size = (15 * SQUARE_SIZE, 15 * SQUARE_SIZE)
         self._rect = pygame.Rect(self.position, self._board_size)
@@ -75,9 +75,7 @@ class Board:
         tile_bag_counter = font.render("Tiles Remaining :" + str(ammount) , True, BLACK)
         pygame.draw.rect(self.win, ORANGE, tilebagbox, 1)
         self.win.blit(tile_bag_counter, (810, 880))
-        
-        
-        print("drawn")
+    
 
     def get_tile_pos(self, position):
         position[0] -= self.position[0]
@@ -87,14 +85,4 @@ class Board:
         return (position[0] // SQUARE_SIZE,
                 position[1] // SQUARE_SIZE)
 
-    def find_word_on_board(self):
-        print('W')
-        # word = []
-        # for col in self.board:
-        #     for tile in col:
-        #         letter_in_word = tile
-        #         print('this is ')
-        #         word.append(letter_in_word)
-        #         print(len(word))
-        #         print('it worked!!!!!!!')
-
+   

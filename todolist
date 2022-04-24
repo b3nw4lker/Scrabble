@@ -13,12 +13,13 @@ GUI
 10) end turn button DONE
 11) add player name inpu NOT DONE
 12) get word check working
-13) sorting out disabling of tiles 
-14) replenishing tiles 
-15) tile image reset
+13) sorting out disabling of tiles -done 
+14) replenishing tiles - done 
+15) tile image reset -done
 16) board image reset 
-17) scoring 
-
+17) Skip functionallity -Done 
+18) swap tile counter - lets the player know how many swap tiles they have left - make it so skip cant be used more than 7 times DONE
+19) 
      
 
 

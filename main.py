@@ -6,8 +6,6 @@ from scrabbleproj.words import Words
 #Ben Walker 
 #Scrabble Project for NEA
 
-# Example Link - https://github.com/cheukyin699/py-scrabble
-
 FPS = 60
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -82,7 +80,6 @@ def main_menu():
         WIN.blit(quittext,(300,500,170,500))
         quitbutton = pygame.Rect(300,500, 500,120)
         pygame.draw.rect(WIN, WHITE, quitbutton, 1,)
-        
         font = pygame.font.Font('freesansbold.ttf', 140)
         rulestext = font.render(("RULES"),True, WHITE)
         WIN.blit(rulestext,(300,300,170,500))

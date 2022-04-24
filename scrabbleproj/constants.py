@@ -29,10 +29,10 @@ POINTS = {"A": 1, "C": 3, "B": 3, "E": 1, "D": 2, "G": 2,
           "F": 4, "I": 1, "H": 4, "K": 5, "J": 8, "M": 3,
           "L": 1, "O": 1, "N": 1, "Q": 10, "P": 3, "S": 1,
           "R": 1, "U": 3, "T": 1, "W": 4, "V": 4, "Y": 4,
-          "X": 8, "Z": 10, "BLANK": 0}
+          "X": 8, "Z": 10, "BLANK":0}
 
-# Letter distribution should make 100there is 100 here so i think it may be running the distribution more than once as only 
-DISTRIBUTION = {"BLANK": 2, "E": 12, "A": 9, "I": 9, "O": 8, "N": 6, "R": 6, "T": 6,     
+# Letter distribution 
+DISTRIBUTION = {"BLANK": 0, "E": 13, "A": 10, "I": 9, "O": 8, "N": 6, "R": 6, "T": 6,     
                 "L": 4, "S": 4, "U": 4, "D": 4, "G": 3, "B": 2, "C": 2, "M": 2,
                 "P": 2, "F": 2, "H": 2, "V": 2, "W": 2, "Y": 2, "K": 1, "J": 1,
                 "X": 1, "Q": 1, "Z": 1}
@@ -104,11 +104,3 @@ You may use a turn to swap all, some, or none of the letters in your deck.
 
 The game ends when all letters have been drawn and one player uses their last later
 '''
-# BOARD_LIST = []           
-
-
-
-
-
-
-#etc...

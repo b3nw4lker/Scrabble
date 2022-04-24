@@ -1,12 +1,11 @@
+
+from locale import currency
 import random
-from turtle import width
-
-
 import pygame
 
 from scrabbleproj.board import Board
-from scrabbleproj.buttons import Button, swapbutton, endturn
-from scrabbleproj.constants import BLACK, HEIGHT, WHITE, DECK_Y_AXIS, WIDTH, BONUS_TILE_COORDS
+from scrabbleproj.buttons import Button, swapbutton, endturn, skipturn
+from scrabbleproj.constants import BLACK, BLANKBOARDTILE, BONUS_TILE_LOCATIONS, DOUBLELETTERIMG, DOUBLEWORDIMG, HEIGHT, ORANGE, SQUARE_SIZE, STARTTILE, TRIPLELETTERIMG, TRIPLEWORDIMG, WHITE, DECK_Y_AXIS, WIDTH, BONUS_TILE_COORDS
 from scrabbleproj.player import Player
 from scrabbleproj.tile import Tile
 from scrabbleproj.tile_bag import TileBag
@@ -38,12 +37,17 @@ class GameManager:
         self.update_player_turn()
 
         self.swapbutton = swapbutton
+        self.swap_ammount = 7
         self.end_turn_button = endturn
+        self.skip_turn_button = skipturn
+        self.tiles_have_been_placed = False
+        
 
         self.board.draw_player_score(self.player_one)
         self.board.draw_player_score(self.player_two)
         self.swapbutton.draw_button(self.window)
         self.end_turn_button.draw_button(self.window)
+        self.skip_turn_button.draw_button(self.window)
         
         
         
@@ -73,24 +77,16 @@ class GameManager:
         if event.type == pygame.MOUSEBUTTONUP:
             if self.board.clicked_in_board(cursor_location):
                 print(f"EVENT BUTTON {event.button}")
-                if event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+                if event.type == pygame.MOUSEBUTTONUP and event.button == 3 and self.last_tile_placed != None:
                     print("Removing board tile")
                     print(f"Before removing tile {self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]].letter}")
-                    self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]] = self.tile_prior_placement
-                    self.board.update_tile(self.tile_prior_placement, self.tile_prior_placement.tile_location)
-                    print(f"After removing tile {self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]].letter}")
-                    self.handle_reactivation()
-                    # if self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_WORD_COORDS"):
-                    #     pass
-                    # elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("TRIPPLE_LETTER_COORDS"):
-                    #     pass
-                    # elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("DOUBLE_WORD_COORDS"):
-                    #     pass
-                    # elif self.last_tile_placed.tile_location in BONUS_TILE_COORDS.get("DOUBLE_LETTER_COORDS"):
-                    #     pass
-                    # else: #for normal tiles 
-                    #     pass
-                        
+                    self.handle_reactivation(self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]])
+                    self.current_player.player_deck.draw_deck() #draw_deck_partially will be used 
+                    self.handle_board_booster_replacement()
+                    # self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]] = self.tile_prior_placement
+                    # self.board.update_tile(self.tile_prior_placement, self.tile_prior_placement.tile_location)
+                    # print(f"After removing tile {self.tile_prior_placement}")
+                                           
                         
                 else:
                     self.handle_board_placement(cursor_location)
@@ -102,6 +98,8 @@ class GameManager:
                 self.handle_tile_swap()
             if endturn.isOver(cursor_location):
                 self.handle_end_turn()
+            if skipturn.isOver(cursor_location) and self.tiles_have_been_placed is False:
+                self.handle_skip_turn()
 
 
 
@@ -143,6 +141,8 @@ class GameManager:
             self.current_player.player_deck.disable_tile(self.last_tile_selected_in_hand)
             self.board.update_tile(self.selected_tile, board_data_object_location.tile_location)
             self.last_tile_placed = cell_clicked
+            print(self.current_player.player_deck.deck_tiles)
+           
             
             self.selected_tile.disabled = True
             #the change i did which when a tile is placed removes it from the players deck on placement (interferes )
@@ -153,6 +153,7 @@ class GameManager:
             # self.word_being_played.append(self.selected_tile.letter)
             # self.tiles_to_replenish_at_turn_end.append(self.selected_tile)
             self.selected_tile = None
+            self.tiles_have_been_placed = True
         #     We need to add new tiles at end of turn and re-draw deck
         else:
             print("Tile not selected from deck")
@@ -169,16 +170,55 @@ class GameManager:
                 self.current_player.player_deck.deck_tiles.insert(index, (new_tile, tile[1]))
                 self.tile_bag.tile_bag_items.remove(new_tile)
                 print("disabled tile")
+    
+    def handle_board_booster_replacement(self):
+        tile_pos_tuple = self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]].tile_location
+        tile_pos_list = list(tile_pos_tuple)
+        print(tile_pos_list)
+        tile_pos_list[0] = tile_pos_list[0] * SQUARE_SIZE
+        tile_pos_list[1] = tile_pos_list[1] * SQUARE_SIZE
+        new_tuple_coords = tuple(tile_pos_list)
+        print(new_tuple_coords)
+        print('new img now')
+        if new_tuple_coords in BONUS_TILE_LOCATIONS.get(TRIPLEWORDIMG):
+            self.window.blit(TRIPLEWORDIMG,(new_tuple_coords))  
+            print("done1")
+        elif new_tuple_coords in BONUS_TILE_LOCATIONS.get(DOUBLEWORDIMG):
+            self.window.blit(DOUBLEWORDIMG,(new_tuple_coords))
+            print("2")  
+        elif new_tuple_coords in BONUS_TILE_LOCATIONS.get(TRIPLELETTERIMG):
+            self.window.blit(TRIPLELETTERIMG,(new_tuple_coords))  
+            print("3") 
+        elif new_tuple_coords in BONUS_TILE_LOCATIONS.get(DOUBLELETTERIMG):
+            self.window.blit(DOUBLELETTERIMG,(new_tuple_coords))    
+            print("4")
+        elif new_tuple_coords in BONUS_TILE_LOCATIONS.get(STARTTILE):
+            self.window.blit(STARTTILE,(new_tuple_coords))
+            print("5")
+        else:
+            self.window.blit(BLANKBOARDTILE,(new_tuple_coords))
+            print("6")
+        self.board.board[self.last_tile_placed[0]][self.last_tile_placed[1]] = self.tile_prior_placement
+        # self.board.update_tile(self.tile_prior_placement, self.tile_prior_placement.tile_location)        
+        
+     
                 
-    def handle_reactivation(self):
+    def handle_reactivation(self,word):
         print('the tile')
-        print(self.last_tile_placed)
-        self.last_tile_placed[1].disabled = False
-        self.board.update_tile(self.last_tile_placed)
+        print(word.letter)
+        word.disabled = False
+        
 
         
              
-                
+    def did_game_end(self):
+        if self.player_one.score > 200 or self.player_two.score > 200:
+            print('game is over')
+        else:
+            pass
+            
+            
+               
         
 
     def handle_hand_select(self, position):
@@ -204,7 +244,7 @@ class GameManager:
         self.selected_tile.player_assigned = self.current_player
 
     def handle_tile_swap(self):
-        if self.selected_tile:
+        if self.selected_tile and self.swap_ammount > 0:
             selected_tile_position_in_list = self.current_player.player_deck.get_location_in_deck(self.selected_tile)
             self.current_player.player_deck.deck_tiles.pop(selected_tile_position_in_list)
             new_tile = (random.choice(self.tile_bag.tile_bag_items), self.selected_tile_location)
@@ -213,6 +253,9 @@ class GameManager:
             self.tile_bag.tile_bag_items.append(self.selected_tile)
             self.current_player.player_deck.update_tile_in_deck(new_tile)
             self.selected_tile = None
+            self.swap_ammount -= 1
+            swapbutton = Button((ORANGE) , 620, 870, 110, 40, (f"Swap [{self.swap_ammount}]"))
+            swapbutton.draw_button(self.window)
         else:
             print("click a tile to swap then press")
 
@@ -222,12 +265,23 @@ class GameManager:
         WIN2.fill(BLACK)
        
             
-        
-        
+    def handle_skip_turn(self): #if the player doesnt want to play a round -> skips 
+        self.swap_ammount = 7
+        self.swapbutton.draw_button(self.window)
+        if self.current_player == self.player_two:
+            self.current_player = self.player_one
+        else:
+            self.current_player = self.player_two
+        self.update_player_turn()      
     
-    def handle_end_turn(self):
+    
+    
+    def handle_end_turn(self): #ends the go changes to the other player 
         print(self.last_tile_placed)
+        self.tiles_have_been_placed = False
+        self.swap_ammount = 7
         self.handle_check_if_word()
+        self.did_game_end()
         self.handle_hand_replacement()
         self.board.draw_tile_bag_count(self.tile_bag)
         
