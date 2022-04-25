@@ -2,6 +2,7 @@ import pygame
 from scrabbleproj.constants import BLACK, ORANGE, SCRABBLEBACKGROUND, WIDTH, HEIGHT, WHITE, RULES
 from scrabbleproj.game_manager import GameManager
 from scrabbleproj.words import Words
+from scrabbleproj.buttons import Button
 
 #Ben Walker 
 #Scrabble Project for NEA
@@ -47,9 +48,10 @@ def rules():
         
         pygame.font.init()
         pygame.font.init()
-        font = pygame.font.Font('freesansbold.ttf', 20)
-        playtext = font.render((f"{RULES}"),True, WHITE)
-        WIN.blit(playtext,(10,10,50,10))
+        font = pygame.font.Font('freesansbold.ttf', 25)
+        Button.combine_text(WIN,RULES,(0,0),font,900,WHITE)
+        # playtext = font.render((f"{RULES}"),True, WHITE)
+        # WIN.blit(playtext,(10,10,50,10))
         
         
         

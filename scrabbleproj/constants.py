@@ -89,18 +89,21 @@ BONUS_TILE_COORDS = {
 }
 
 RULES = '''
-Players must combine two or more of his or her letters to form a word
 
-After each go a player can collect the same number of tiles they used if there are enough tiles left in the bag.
+----------------------------------------RULES---------------------------------------------
+1) Players must combine two or more of his or her letters to form a word
 
-New words may be formed by:
-o	Adding one or more letters to a word or letters already on the board.
-o	Placing a word at right angles to a word already on the board. The new word must use one of the letters already on the board or must add a letter to i
-o	Placing a complete word parallel to a word already played
+2) After each go a players tiles are redrawn from ones left in the bag.
 
-No tile may be shifted or replaced after it has been played and scored.
+3) New words may be formed by:
+- Adding one or more letters to a word or letters already on the board.
+- Placing a word at right angles to a word already on the board. The new word must use one of the letters already on the board or must add a letter to it.
+- Placing a complete word parallel to a word already played
 
-You may use a turn to swap all, some, or none of the letters in your deck.
 
-The game ends when all letters have been drawn and one player uses their last later
+4) No tile may be shifted or replaced after it has been played and scored.
+
+5) You may swap a tile in your deck seven times with another tile in the tile bag.
+
+6)The game ends when all letters have been drawn and one player uses their last letter
 '''

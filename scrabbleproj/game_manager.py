@@ -4,7 +4,7 @@ import random
 import pygame
 
 from scrabbleproj.board import Board
-from scrabbleproj.buttons import Button, swapbutton, endturn, skipturn
+from scrabbleproj.buttons import Button, swapbutton, endturn, skipturn, whowon
 from scrabbleproj.constants import BLACK, BLANKBOARDTILE, BONUS_TILE_LOCATIONS, DOUBLELETTERIMG, DOUBLEWORDIMG, HEIGHT, ORANGE, SQUARE_SIZE, STARTTILE, TRIPLELETTERIMG, TRIPLEWORDIMG, WHITE, DECK_Y_AXIS, WIDTH, BONUS_TILE_COORDS
 from scrabbleproj.player import Player
 from scrabbleproj.tile import Tile
@@ -29,6 +29,9 @@ class GameManager:
         
         self.player_one = Player("Player One", self.tile_bag, self.window, (101, 100))
         self.player_two = Player("Player Two", self.tile_bag, self.window, (401, 400))
+        
+            
+            
 
         print(f"Initial tile bag qty: {self.tile_bag.get_tile_bag_count()}")
         
@@ -36,6 +39,7 @@ class GameManager:
         self.current_player = self.player_one
         self.update_player_turn()
 
+        self.who_won = whowon
         self.swapbutton = swapbutton
         self.swap_ammount = 7
         self.end_turn_button = endturn
@@ -53,6 +57,7 @@ class GameManager:
         
 
         print(f"Tile bag qty after player creation: {self.tile_bag.get_tile_bag_count()}")
+        # self.ai_possibility()
         
         
         self.board.draw_tile_bag_count(self.tile_bag)
@@ -109,8 +114,10 @@ class GameManager:
         print('player score')
         if type(word_score) == int:
             self.current_player.score += word_score
+            self.is_a_word = True
         else:
             print("not a word bud")
+            self.is_a_word = False
         
         print(f"player 1 score = {self.player_one.score}")
         print(f"player 2 score = {self.player_two.score}")
@@ -207,15 +214,60 @@ class GameManager:
         print('the tile')
         print(word.letter)
         word.disabled = False
+    
+      
         
-
+    # def ai_possibility(self):
+    #     ai_letters = []
+    #     for tile in range(len(self.player_two.player_deck.deck_tiles) + 1):
+    #         tile_1 = self.player_two.player_deck.deck_tiles[tile-1]
+    #         ai_letters.append(tile_1[0].letter)
+    #     ai_letters_str = ''.join([str(item) for item in ai_letters])
+    #     rest_of_word = ai_letters[0]
+    #     ai_tail_str = ''.join([str(item) for item in rest_of_word]) 
+    #     word_not_made = True
+    #     true_word = []
+        
+    #     while word_not_made is True:
+    #         list1 = [] 
+    #         for tile in ai_letters:
+    #             letter = random.choice(ai_letters)
+    #             list1.append(letter)
+    #             ai_letters.remove(letter)
+    #         word_str =  ''.join([str(item) for item in list1])              
+    #         if self.words.does_word_exist(word_str):
+    #             true_word.append(word_str)
+    #             word_not_made = False
+    #     print(true_word)
+                
+        
+        
+        # pos1_in_word = str(ai_letters[1])
+        # possible_words = [ai_letters_str.replace((pos1_in_word),letter) for letter in ai_tail_str]
+        # for word in possible_words:
+        #     if self.words.does_word_exist(word):
+        #         use_word = word
+        #         print(use_word)
+        #     else: 
+        #         print("no words")
+              
+        
+                           
+     
         
              
     def did_game_end(self):
-        if self.player_one.score > 200 or self.player_two.score > 200:
+        if self.player_one.score > 12:
             print('game is over')
+            self.who_won = Button((ORANGE), 850, 650, 150, 40,  (f'Player 1 wins'))
+            self.who_won.draw_button(self.window)
+        elif self.player_two.score > 12:
+            self.who_won = Button((ORANGE), 850, 650, 150, 40,  (f'Player 2 wins'))
+            self.who_won.draw_button(self.window)
         else:
             pass
+           
+            
             
             
                
@@ -248,6 +300,7 @@ class GameManager:
             selected_tile_position_in_list = self.current_player.player_deck.get_location_in_deck(self.selected_tile)
             self.current_player.player_deck.deck_tiles.pop(selected_tile_position_in_list)
             new_tile = (random.choice(self.tile_bag.tile_bag_items), self.selected_tile_location)
+            self.tile_bag.tile_bag_items.remove(new_tile[0])
             self.current_player.player_deck.deck_tiles.insert(self.tile_area_clicked, new_tile)
             self.current_player.player_deck.deck_tiles.append(new_tile)
             self.tile_bag.tile_bag_items.append(self.selected_tile)
@@ -284,15 +337,19 @@ class GameManager:
         self.did_game_end()
         self.handle_hand_replacement()
         self.board.draw_tile_bag_count(self.tile_bag)
-        
-
+        swapbutton = Button((ORANGE) , 620, 870, 110, 40, (f"Swap [7]"))
+        swapbutton.draw_button(self.window)
         if self.current_player == self.player_two:
             self.current_player = self.player_one
         else:
             self.current_player = self.player_two
+            
+        self.update_player_turn()
+
+        
 
         #self.tiles_to_replenish_at_turn_end = []
-        self.update_player_turn()
+        
 
         print(f"It is player: {self.current_player.player_name} turn")
 

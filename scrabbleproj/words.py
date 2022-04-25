@@ -152,6 +152,7 @@ class Words:
     # move all tiles form list back to deck
 
     def score_word(self, word):
+        self.word_score = 0
         tripple_letter_locations = BONUS_TILE_COORDS.get("TRIPPLE_LETTER_COORDS")
         double_letter_locations = BONUS_TILE_COORDS.get("DOUBLE_LETTER_CORDS") 
     

@@ -33,12 +33,44 @@ class Button():
             if pos[1] > self.y and pos[1] < self.y + self.height:
                 return True
             
+            
+    def combine_text(win,text,position,font,max_width,colour):
+        paragraph = [word.split(' ') for word in text.splitlines()]  #list of words
+        space = font.size(' ')[0]  # the width of space 
+        x, y = position # pos is tuple version of coords 
+        for line in paragraph:
+            for word in line:
+                word_surface = font.render(word, 0, colour)
+                word_width, word_height = word_surface.get_size()
+                if x + word_width >= max_width:
+                    x = position[0]  # reset the x
+                    y += word_height  # starts text on new row
+                win.blit(word_surface, (x, y))
+                x += word_width + space
+            x = position[0]  # resets x again
+            y += word_height  # begins on new row        
     
+    # class combine_text():
+    #     def __init__(self,win,text,position,font,max_width,colour):
+    #         self.win = win
+    #         self.text = text
+    #         self.position = position
+    #         self.font = font 
+    #         self.max_width = max_width
+    #         self.colour = colour
+        
+        
+        
+        
+        
+        
+        
 
 
 swapbutton = Button((ORANGE) , 620, 870, 110, 40, (f"Swap [7]"))
 endturn = Button((ORANGE) , 400, 870, 100, 40,  'Play')
 skipturn = Button((ORANGE) , 510, 870, 100, 40, 'Skip Turn')
+whowon = Button((ORANGE), 850, 650, 150, 40,  (f'Player 1 wins'))
 
 
 
